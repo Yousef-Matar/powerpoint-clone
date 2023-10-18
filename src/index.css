@@ -8,9 +8,30 @@ body {
 		"Helvetica Neue", sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+	overflow: hidden;
 }
 
 code {
 	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
 		monospace;
+}
+/* Scrollbar */
+
+/* Width of scrollbar for X and Y axis */
+::-webkit-scrollbar {
+	width: 5px;
+	height: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	background: #00000005;
+	border: solid 2px transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	box-shadow: inset 0 0 10px 10px rgb(71 85 105);
+	border-radius: 10px;
+	border: solid 2px transparent;
 }
