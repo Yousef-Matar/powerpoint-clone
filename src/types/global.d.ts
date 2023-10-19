@@ -5,12 +5,17 @@ declare global {
 		text: string;
 		visible: boolean;
 	};
-	interface slide {
+	type slide = {
 		id: string;
 		type: string;
-		header: Nullable<string>;
-		subHeader: Nullable<string>;
+		header: string;
+		subHeader: string;
 		active: boolean;
+	};
+	interface slideInterface {
+		slideID: string;
+		field: string;
+		value: string;
 	}
 	interface slidesInterface {
 		slides: slide[];

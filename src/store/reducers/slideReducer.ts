@@ -1,4 +1,4 @@
-import { CREATE_SLIDE, SELECT_SLIDE } from "../actionTypes/actionTypes";
+import * as actionTypes from "../actionTypes/actionTypes";
 
 const initialState: slidesInterface = {
 	slides: [
@@ -12,27 +12,31 @@ const initialState: slidesInterface = {
 		{
 			id: Date.now().toString(36) + Math.random().toString(36).substr(2),
 			type: "text",
-			header: null,
-			subHeader: null,
+			header: "",
+			subHeader: "",
 			active: false,
 		},
 	],
 };
 
 interface createAction {
-	type: typeof CREATE_SLIDE;
+	type: typeof actionTypes.CREATE_SLIDE;
 	payload: string;
 }
 interface selectAction {
-	type: typeof SELECT_SLIDE;
+	type: typeof actionTypes.SELECT_SLIDE;
 	payload: string;
+}
+interface updateAction {
+	type: typeof actionTypes.UPDATE_SLIDE;
+	payload: slide;
 }
 export const slideReducer = (
 	state = initialState,
-	action: createAction | selectAction
+	action: createAction | selectAction | updateAction
 ) => {
 	switch (action.type) {
-		case CREATE_SLIDE: {
+		case actionTypes.CREATE_SLIDE: {
 			return {
 				...state,
 				slides: [
@@ -44,14 +48,14 @@ export const slideReducer = (
 							Date.now().toString(36) +
 							Math.random().toString(36).substr(2),
 						type: action.payload,
-						header: null,
-						subHeader: null,
+						header: "",
+						subHeader: "",
 						active: true,
 					},
 				],
 			};
 		}
-		case SELECT_SLIDE: {
+		case actionTypes.SELECT_SLIDE: {
 			return {
 				...state,
 				slides: [...state.slides].map((slide) => {
@@ -59,6 +63,20 @@ export const slideReducer = (
 						return { ...slide, active: true };
 					} else {
 						return { ...slide, active: false };
+					}
+				}),
+			};
+		}
+		case actionTypes.UPDATE_SLIDE: {
+			return {
+				...state,
+				slides: [...state.slides].map((slide) => {
+					if (slide.id === action.payload.id) {
+						return {
+							...action.payload,
+						};
+					} else {
+						return slide;
 					}
 				}),
 			};
