@@ -8,10 +8,7 @@ const SlideView = () => {
 	);
 
 	return (
-		<div
-			className=" min-w-[33.333333%] max-w-[66.666666%] h-100 py-10 px-5"
-			style={{ width: "66.666666%" }}
-		>
+		<div className=" min-w-[60%] max-w-[80%] h-100 py-10 px-5 flex-grow">
 			{slides.map(
 				(slide, index) =>
 					slide.active && (

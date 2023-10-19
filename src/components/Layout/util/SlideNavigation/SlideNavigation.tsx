@@ -15,7 +15,8 @@ const SlideNavigation = () => {
 
 	return (
 		<div
-			className="min-w-[33.333333%] max-w-[66.666666%] max-h-full overflow-y-auto"
+		id="slide-navigation"
+			className="min-w-[20%] max-w-[40%] max-h-full overflow-y-auto"
 			style={{
 				width: "33.333333%",
 				height: `calc(100vh - ${navBarHeight}px)`,
