@@ -21,7 +21,7 @@ const initialState: slidesInterface = {
 
 interface createAction {
 	type: typeof CREATE_SLIDE;
-	payload: slide;
+	payload: string;
 }
 interface selectAction {
 	type: typeof SELECT_SLIDE;
@@ -33,7 +33,23 @@ export const slideReducer = (
 ) => {
 	switch (action.type) {
 		case CREATE_SLIDE: {
-			return { ...state, slides: [...state.slides, action.payload] };
+			return {
+				...state,
+				slides: [
+					...state.slides.map((slide) => {
+						return { ...slide, active: false };
+					}),
+					{
+						id:
+							Date.now().toString(36) +
+							Math.random().toString(36).substr(2),
+						type: action.payload,
+						header: null,
+						subHeader: null,
+						active: true,
+					},
+				],
+			};
 		}
 		case SELECT_SLIDE: {
 			return {

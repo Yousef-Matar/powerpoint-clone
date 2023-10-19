@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 
 const NavBar = () => {
+	const dispatch = useDispatch();
 	const [tabs, setTabs] = useState([
 		{ text: "Home", visible: true },
 		{ text: "Insert", visible: false },
@@ -57,6 +59,9 @@ const NavBar = () => {
 			}
 		}
 	};
+	const createSlide = () => {
+		dispatch({ type: "CREATE_SLIDE", payload: "text" });
+	};
 	return (
 		<div id="nav-bar">
 			<div className="flex gap-1 min-w-full">
@@ -81,7 +86,10 @@ const NavBar = () => {
 					Home Tab
 				</div>
 				<div id="insert-content" className="hidden">
-					<button className="p-1 border border-slate-900 dark:bg-slate-500 rounded">
+					<button
+						className="p-1 border border-slate-900 dark:bg-slate-500 rounded"
+						onClick={createSlide}
+					>
 						New Slide
 					</button>
 				</div>
