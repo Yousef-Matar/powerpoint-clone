@@ -7,6 +7,10 @@ const NavBar = () => {
 		{ text: "Home", visible: true },
 		{ text: "Insert", visible: false },
 	]);
+	const [slideType, setSlideType] = useState("text");
+	const createSlide = () => {
+		dispatch({ type: "CREATE_SLIDE", payload: slideType });
+	};
 	const handleTabClick = (
 		clickEvent: React.MouseEvent<HTMLButtonElement, MouseEvent>,
 		clickedTab: NavTab
@@ -58,9 +62,6 @@ const NavBar = () => {
 				break;
 			}
 		}
-	};
-	const createSlide = () => {
-		dispatch({ type: "CREATE_SLIDE", payload: "text" });
 	};
 	return (
 		<div id="nav-bar">
