@@ -51,7 +51,7 @@ const SlideNavigation = () => {
 					return (
 						<li
 							key={index}
-							className="min-h-[25%] relative focus:outline-none select-none caret-transparent"
+							className="min-h-[25%] relative select-none caret-transparent"
 							onKeyDown={(event) => {
 								event.preventDefault();
 								if (event.key === ctrlKey) setCtrlDown(true);
@@ -66,7 +66,10 @@ const SlideNavigation = () => {
 								)
 									dispatch({
 										type: "DELETE_SLIDE",
-										payload: slide,
+										payload: {
+											slideID: slide.id,
+											slideIndex: index,
+										},
 									});
 							}}
 							onKeyUp={(event) => {
