@@ -87,12 +87,23 @@ const NavBar = () => {
 					Home Tab
 				</div>
 				<div id="insert-content" className="hidden">
-					<button
-						className="p-1 border border-slate-900 dark:bg-slate-500 rounded"
-						onClick={createSlide}
-					>
-						New Slide
-					</button>
+					<div className="inline-flex">
+						<button
+							className="p-1 border border-slate-900 dark:bg-slate-500 rounded-l border-r-0"
+							onClick={createSlide}
+						>
+							New Slide
+						</button>
+						<select
+							className="p-1 border border-slate-900 dark:bg-slate-500 rounded-r border-l-0 w-5"
+							onChange={(event) =>
+								setSlideType(event.target.value)
+							}
+						>
+							<option value="text">Text</option>
+							<option value="image">Image</option>
+						</select>
+					</div>
 				</div>
 			</div>
 		</div>
