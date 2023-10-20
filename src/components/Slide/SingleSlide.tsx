@@ -103,6 +103,10 @@ const SingleSlide = (props: { slide: slide; navigation: boolean }) => {
 							type: "PASTE_ELEMENT",
 						});
 				},
+				onKeyUp: (event) => {
+					event.preventDefault();
+					if (event.key === ctrlKey) setCtrlDown(false);
+				},
 			})}
 		>
 			{initialSlide.elements.map((renderedElement) => {
