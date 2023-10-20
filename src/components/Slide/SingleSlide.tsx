@@ -10,6 +10,7 @@ const deleteKey = "Delete";
 const SingleSlide = (props: { slide: slide; navigation: boolean }) => {
 	const dispatch = useDispatch();
 	const [initialSlide, setInitialSlide] = useState(props.slide);
+	const slideWrapper = document.getElementById(`slide-${initialSlide.id}`);
 	const [ctrlDown, setCtrlDown] = useState(false);
 	const selectSlide = (slideID: string) => {
 		dispatch({ type: "SELECT_SLIDE", payload: slideID });
@@ -31,7 +32,7 @@ const SingleSlide = (props: { slide: slide; navigation: boolean }) => {
 		htmlElement: HTMLElement | null,
 		elementID: string
 	) => {
-		if (htmlElement == null) return;
+		if (htmlElement == null || slideWrapper == null) return;
 		var clickPositionX = event.clientX;
 		var clickPositionY = event.clientY;
 		var newElementPositionX =
@@ -48,8 +49,16 @@ const SingleSlide = (props: { slide: slide; navigation: boolean }) => {
 						return {
 							...element,
 							position: {
-								top: newElementPositionY + "px",
-								left: newElementPositionX + "px",
+								top:
+									(newElementPositionY /
+										slideWrapper.clientHeight) *
+										100 +
+									"%",
+								left:
+									(newElementPositionX /
+										slideWrapper.clientWidth) *
+										100 +
+									"%",
 							},
 						};
 					} else {
@@ -65,8 +74,10 @@ const SingleSlide = (props: { slide: slide; navigation: boolean }) => {
 				htmlElement.offsetTop - (clickPositionY - event.clientY);
 			clickPositionX = event.clientX;
 			clickPositionY = event.clientY;
-			htmlElement.style.top = newElementPositionY + "px";
-			htmlElement.style.left = newElementPositionX + "px";
+			htmlElement.style.top =
+				(newElementPositionY / slideWrapper.clientHeight) * 100 + "%";
+			htmlElement.style.left =
+				(newElementPositionX / slideWrapper.clientWidth) * 100 + "%";
 		};
 	};
 	return (
@@ -79,10 +90,11 @@ const SingleSlide = (props: { slide: slide; navigation: boolean }) => {
 					  }`
 					: ""
 			}`}
-			{...(props.navigation &&
-				!initialSlide.active && {
-					onClick: () => selectSlide(initialSlide.id),
-				})}
+			{...(props.navigation
+				? !initialSlide.active && {
+						onClick: () => selectSlide(initialSlide.id),
+				  }
+				: { id: `slide-${initialSlide.id}` })}
 		>
 			{initialSlide.elements.map((renderedElement) => {
 				return (
