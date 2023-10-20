@@ -13,9 +13,8 @@ const initialState: storeInterface = {
 						Math.random().toString(36).substr(2),
 					type: "title",
 					content: "<div>Slide 1</div>",
-					placeholder: "<div>Click to add title</div>",
 					position: {
-						top: "20%",
+						top: "5%",
 						left: "5%",
 					},
 				},
@@ -25,9 +24,8 @@ const initialState: storeInterface = {
 						Math.random().toString(36).substr(2),
 					type: "subtitle",
 					content: "<div>Sub title</div>",
-					placeholder: "<div>Click to add subtitle</div>",
 					position: {
-						top: "50%",
+						top: "30%",
 						left: "5%",
 					},
 				},
@@ -96,10 +94,8 @@ export const slideReducer = (
 												.substr(2),
 										type: "title",
 										content: "",
-										placeholder:
-											"<div>Click to add title</div>",
 										position: {
-											top: "20%",
+											top: "5%",
 											left: "5%",
 										},
 									},
@@ -111,13 +107,56 @@ export const slideReducer = (
 												.substr(2),
 										type: "subtitle",
 										content: "",
-										placeholder:
-											"<div>Click to add subtitle</div>",
 										position: {
-											top: "50%",
+											top: "30%",
 											left: "5%",
 										},
 									},
+								],
+							},
+						],
+					};
+				}
+				case 'image':{
+					return {
+						...state,
+						slides: [
+							...state.slides.map((slide) => {
+								return { ...slide, active: false };
+							}),
+							{
+								id:
+									Date.now().toString(36) +
+									Math.random().toString(36).substr(2),
+								active: true,
+								elements: [
+									{
+										id:
+											Date.now().toString(36) +
+											Math.random()
+												.toString(36)
+												.substr(2),
+										type: "title",
+										content: "",
+										position: {
+											top: "5%",
+											left: "5%",
+										},
+									},
+									{
+										id:
+											Date.now().toString(36) +
+											Math.random()
+												.toString(36)
+												.substr(2),
+										type: "image",
+										content: "",
+										position: {
+											top: "30%",
+											left: "5%",
+										},
+									},
+								
 								],
 							},
 						],

@@ -14,7 +14,6 @@ declare global {
 		id: string;
 		type: string;
 		content: string;
-		placeholder: string;
 		position: {
 			top: string;
 			left: string;

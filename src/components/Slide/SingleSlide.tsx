@@ -109,48 +109,52 @@ const SingleSlide = (props: { slide: slide; navigation: boolean }) => {
 								),
 						})}
 					>
-						<ContentEditable
-							className={`p-4 focus:outline-none ${
-								renderedElement.type === "title"
-									? "text-3xl "
-									: "text-xl "
-							}${
-								props.navigation
-									? "cursor-pointer"
-									: "cursor-text"
-							}`}
-							html={
-								renderedElement.content.length
-									? renderedElement.content
-									: props.navigation
-									? ""
-									: renderedElement.placeholder
-							}
-							disabled={props.navigation}
-							onChange={(event) =>
-								updateSlide({
-									...initialSlide,
-									elements: initialSlide.elements.map(
-										(element) => {
-											if (
-												element.id ===
-												renderedElement.id
-											) {
-												return {
-													...element,
-													content:
-														event.currentTarget
-															.innerHTML,
-												};
-											} else {
-												return element;
+						{["title", "subtitle"].includes(
+							renderedElement.type
+						) ? (
+							<ContentEditable
+								className={`p-4 focus:outline-none ${
+									renderedElement.type === "title"
+										? "text-3xl "
+										: "text-xl "
+								}${
+									props.navigation
+										? "cursor-pointer"
+										: "cursor-text"
+								}`}
+								html={
+									renderedElement.content.length
+										? renderedElement.content
+										: ""
+								}
+								disabled={props.navigation}
+								onChange={(event) =>
+									updateSlide({
+										...initialSlide,
+										elements: initialSlide.elements.map(
+											(element) => {
+												if (
+													element.id ===
+													renderedElement.id
+												) {
+													return {
+														...element,
+														content:
+															event.currentTarget
+																.innerHTML,
+													};
+												} else {
+													return element;
+												}
 											}
-										}
-									),
-								})
-							}
-							onMouseDown={(event) => event.stopPropagation()}
-						/>
+										),
+									})
+								}
+								onMouseDown={(event) => event.stopPropagation()}
+							/>
+						) : (
+							<div>Image</div>
+						)}
 					</div>
 				);
 			})}
