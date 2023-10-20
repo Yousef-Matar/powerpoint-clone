@@ -1,7 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+const useDidMount = () => {
+	const [didMount, setDidMount] = useState(false);
+	useEffect(() => {
+		setDidMount(true);
+	}, []);
 
+	return didMount;
+};
 const NavBar = () => {
+	const didMount = useDidMount();
 	const dispatch = useDispatch();
 	const [tabs, setTabs] = useState([
 		{ text: "Home", visible: true },
@@ -63,6 +71,10 @@ const NavBar = () => {
 			}
 		}
 	};
+	useEffect(() => {
+		if (didMount) createSlide();
+	}, [slideType]);
+
 	return (
 		<div id="nav-bar">
 			<div className="flex gap-1 min-w-full">
@@ -95,13 +107,13 @@ const NavBar = () => {
 							New Slide
 						</button>
 						<select
-							className="p-1 border border-slate-900 dark:bg-slate-500 rounded-r border-l-0 w-5"
+							className="p-1 border border-slate-900 dark:bg-slate-500 rounded-r border-l-0 w-5 text-sm"
 							onChange={(event) =>
 								setSlideType(event.target.value)
 							}
 						>
-							<option value="text">Text</option>
-							<option value="image">Image</option>
+							<option value="text">Title Slide</option>
+							<option value="image">Image Slide</option>
 						</select>
 					</div>
 				</div>
