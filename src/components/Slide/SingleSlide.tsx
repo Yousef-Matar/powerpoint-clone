@@ -27,12 +27,12 @@ const SingleSlide = (props: { slide: slide; navigation: boolean }) => {
 		elementID: string
 	) => {
 		if (htmlElement == null) return;
-		var clickPositionX = 0;
-		var clickPositionY = 0;
-		var newElementPositionX = 0;
-		var newElementPositionY = 0;
-		clickPositionX = event.clientX;
-		clickPositionY = event.clientY;
+		var clickPositionX = event.clientX;
+		var clickPositionY = event.clientY;
+		var newElementPositionX =
+			htmlElement.offsetLeft - (clickPositionX - event.clientX);
+		var newElementPositionY =
+			htmlElement.offsetTop - (clickPositionY - event.clientY);
 		document.onmouseup = () => {
 			document.onmouseup = null;
 			document.onmousemove = null;
@@ -66,13 +66,13 @@ const SingleSlide = (props: { slide: slide; navigation: boolean }) => {
 	};
 	return (
 		<div
-			className={`bg-white dark:bg-black rounded p-3 relative ${
+			className={`bg-white dark:bg-black rounded p-3 relative h-full ${
 				props.navigation
-					? `h-[25vh] overflow-hidden cursor-pointer ${
+					? `overflow-hidden cursor-pointer ${
 							initialSlide.active &&
 							"border-4 border-slate-900 dark:border-slate-500"
 					  }`
-					: "h-full"
+					: ""
 			}`}
 			{...(props.navigation &&
 				!initialSlide.active && {
@@ -83,10 +83,10 @@ const SingleSlide = (props: { slide: slide; navigation: boolean }) => {
 				return (
 					<div
 						key={initialSlide.id + "_" + renderedElement.id}
-						className={`bg-transparent rounded absolute cursor-move p-5 
+						className={`bg-transparent rounded absolute p-5 cursor-move
 						${
 							!props.navigation &&
-							"border border-dashed focus:border-solid focus-within:border-solid"
+							"cursor-move border border-dashed focus:border-solid focus-within:border-solid"
 						}`}
 						style={{
 							zoom: props.navigation ? "0.4" : "1",
@@ -109,10 +109,14 @@ const SingleSlide = (props: { slide: slide; navigation: boolean }) => {
 						})}
 					>
 						<ContentEditable
-							className={`p-4 focus:outline-none cursor-text ${
+							className={`p-4 focus:outline-none ${
 								renderedElement.type === "title"
-									? "text-3xl"
-									: "text-xl"
+									? "text-3xl "
+									: "text-xl "
+							}${
+								props.navigation
+									? "cursor-pointer"
+									: "cursor-text"
 							}`}
 							html={
 								renderedElement.content.length

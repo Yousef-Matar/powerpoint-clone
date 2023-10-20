@@ -26,7 +26,7 @@ const initialState: slidesInterface = {
 					content: "<div>Sub title</div>",
 					placeholder: "<div>Click to add subtitle</div>",
 					position: {
-						top: "40%",
+						top: "50%",
 						left: "5%",
 					},
 				},
@@ -93,7 +93,7 @@ export const slideReducer = (
 										placeholder:
 											"<div>Click to add subtitle</div>",
 										position: {
-											top: "40%",
+											top: "50%",
 											left: "5%",
 										},
 									},
