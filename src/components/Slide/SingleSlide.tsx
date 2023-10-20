@@ -2,10 +2,15 @@ import React, { useEffect, useState } from "react";
 import ContentEditable from "react-contenteditable";
 import { useDispatch } from "react-redux";
 import { useDebounce } from "../../util/Debounce";
-
+const ctrlKey = "Control";
+const cKey = "c";
+const vKey = "v";
+const backspaceKey = "Backspace";
+const deleteKey = "Delete";
 const SingleSlide = (props: { slide: slide; navigation: boolean }) => {
 	const dispatch = useDispatch();
 	const [initialSlide, setInitialSlide] = useState(props.slide);
+	const [ctrlDown, setCtrlDown] = useState(false);
 	const selectSlide = (slideID: string) => {
 		dispatch({ type: "SELECT_SLIDE", payload: slideID });
 	};
@@ -107,6 +112,15 @@ const SingleSlide = (props: { slide: slide; navigation: boolean }) => {
 									),
 									renderedElement.id
 								),
+							onKeyDown: (event) => {
+								event.preventDefault();
+								if (event.key === ctrlKey) setCtrlDown(true);
+								if (ctrlDown && event.key === cKey)
+									dispatch({
+										type: "COPY_ELEMENT",
+										payload: renderedElement,
+									});
+							},
 						})}
 					>
 						{["title", "subtitle"].includes(
@@ -151,6 +165,7 @@ const SingleSlide = (props: { slide: slide; navigation: boolean }) => {
 									})
 								}
 								onMouseDown={(event) => event.stopPropagation()}
+								onKeyDown={(event) => event.stopPropagation()}
 							/>
 						) : (
 							<div>Image</div>

@@ -12,9 +12,9 @@ export const updateSlide = (slide: slide) => ({
 	type: actionTypes.UPDATE_SLIDE,
 	payload: slide,
 });
-export const copyElement = (copiedElement: slide | slideElement) => ({
-	type: actionTypes.COPY_ELEMENT,
-	payload: copiedElement,
+export const copySlide = (copiedSlide: slide) => ({
+	type: actionTypes.COPY_SLIDE,
+	payload: copiedSlide,
 });
 export const pasteSlide = () => ({
 	type: actionTypes.PASTE_SLIDE,

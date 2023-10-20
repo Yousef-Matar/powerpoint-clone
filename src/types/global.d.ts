@@ -25,7 +25,8 @@ declare global {
 		value: string;
 	}
 	interface storeInterface {
-		copiedElement: Nullable<slide>;
+		copiedSlide: Nullable<slide>;
+		copiedElement: Nullable<slideElement>;
 		slides: Array<slide>;
 	}
 }

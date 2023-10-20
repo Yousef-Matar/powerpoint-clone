@@ -57,7 +57,7 @@ const SlideNavigation = () => {
 								if (event.key === ctrlKey) setCtrlDown(true);
 								if (ctrlDown && event.key === cKey)
 									dispatch({
-										type: "COPY_ELEMENT",
+										type: "COPY_SLIDE",
 										payload: slide,
 									});
 								if (
