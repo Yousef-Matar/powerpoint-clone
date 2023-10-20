@@ -47,7 +47,6 @@ const SingleSlide = (props: { slide: slide; navigation: boolean }) => {
 	};
 	return (
 		<div
-			id={props.navigation ? "navigation-slide" : "layout-slide"}
 			className={`bg-white dark:bg-black rounded p-3 relative ${
 				props.navigation
 					? `h-[25vh] overflow-hidden cursor-pointer ${
@@ -63,12 +62,10 @@ const SingleSlide = (props: { slide: slide; navigation: boolean }) => {
 			title={props.navigation ? initialSlide.header : undefined}
 		>
 			<div
-				id={
-					props.navigation
-						? "navigation-slide-header"
-						: "layout-slide-header-moveable"
-				}
-				className={`bg-transparent rounded text-3xl absolute cursor-move  ${
+				{...(!props.navigation && {
+					id: "layout-slide-header-moveable",
+				})}
+				className={`bg-transparent rounded text-3xl absolute cursor-move left-[5%] top-[20%]  ${
 					!props.navigation &&
 					"p-5 border border-dashed focus-within:border-solid"
 				}`}
@@ -76,8 +73,6 @@ const SingleSlide = (props: { slide: slide; navigation: boolean }) => {
 					zoom: props.navigation ? "0.4" : "1",
 					maxWidth: "100%",
 					width: "90%",
-					top: "20%",
-					left: "5%",
 				}}
 				{...(!props.navigation && {
 					onMouseDown: (event) =>
