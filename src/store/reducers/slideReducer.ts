@@ -4,17 +4,33 @@ const initialState: slidesInterface = {
 	slides: [
 		{
 			id: Date.now().toString(36) + Math.random().toString(36).substr(2),
-			type: "text",
-			header: "Slide 1",
-			subHeader: "Sub Header",
 			active: true,
-		},
-		{
-			id: Date.now().toString(36) + Math.random().toString(36).substr(2),
-			type: "text",
-			header: "",
-			subHeader: "",
-			active: false,
+			elements: [
+				{
+					id:
+						Date.now().toString(36) +
+						Math.random().toString(36).substr(2),
+					type: "title",
+					content: "<div>Slide 1</div>",
+					placeholder: "<div>Click to add title</div>",
+					position: {
+						top: "20%",
+						left: "5%",
+					},
+				},
+				{
+					id:
+						Date.now().toString(36) +
+						Math.random().toString(36).substr(2),
+					type: "subtitle",
+					content: "<div>Sub title</div>",
+					placeholder: "<div>Click to add subtitle</div>",
+					position: {
+						top: "40%",
+						left: "5%",
+					},
+				},
+			],
 		},
 	],
 };
@@ -33,27 +49,63 @@ interface updateAction {
 }
 export const slideReducer = (
 	state = initialState,
-	action: createAction | selectAction | updateAction
+	action: createAction | selectAction|updateAction
 ) => {
 	switch (action.type) {
 		case actionTypes.CREATE_SLIDE: {
-			return {
-				...state,
-				slides: [
-					...state.slides.map((slide) => {
-						return { ...slide, active: false };
-					}),
-					{
-						id:
-							Date.now().toString(36) +
-							Math.random().toString(36).substr(2),
-						type: action.payload,
-						header: "",
-						subHeader: "",
-						active: true,
-					},
-				],
-			};
+			switch (action.payload) {
+				case "text": {
+					return {
+						...state,
+						slides: [
+							...state.slides.map((slide) => {
+								return { ...slide, active: false };
+							}),
+							{
+								id:
+									Date.now().toString(36) +
+									Math.random().toString(36).substr(2),
+								active: true,
+								elements: [
+									{
+										id:
+											Date.now().toString(36) +
+											Math.random()
+												.toString(36)
+												.substr(2),
+										type: "title",
+										content: "",
+										placeholder:
+											"<div>Click to add title</div>",
+										position: {
+											top: "20%",
+											left: "5%",
+										},
+									},
+									{
+										id:
+											Date.now().toString(36) +
+											Math.random()
+												.toString(36)
+												.substr(2),
+										type: "subtitle",
+										content: "",
+										placeholder:
+											"<div>Click to add subtitle</div>",
+										position: {
+											top: "40%",
+											left: "5%",
+										},
+									},
+								],
+							},
+						],
+					};
+				}
+				default: {
+					return state;
+				}
+			}
 		}
 		case actionTypes.SELECT_SLIDE: {
 			return {

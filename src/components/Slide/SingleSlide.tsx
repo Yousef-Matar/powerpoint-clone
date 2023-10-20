@@ -23,26 +23,45 @@ const SingleSlide = (props: { slide: slide; navigation: boolean }) => {
 
 	const moveElement = (
 		event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-		element: HTMLElement | null
+		htmlElement: HTMLElement | null,
+		elementID: string
 	) => {
-		if (element == null) return;
+		if (htmlElement == null) return;
 		var clickPositionX = 0;
 		var clickPositionY = 0;
-		var newClickPositionX = 0;
-		var newClickPositionY = 0;
+		var newElementPositionX = 0;
+		var newElementPositionY = 0;
 		clickPositionX = event.clientX;
 		clickPositionY = event.clientY;
 		document.onmouseup = () => {
 			document.onmouseup = null;
 			document.onmousemove = null;
+			updateSlide({
+				...initialSlide,
+				elements: initialSlide.elements.map((element) => {
+					if (element.id === elementID) {
+						return {
+							...element,
+							position: {
+								top: newElementPositionY + "px",
+								left: newElementPositionX + "px",
+							},
+						};
+					} else {
+						return element;
+					}
+				}),
+			});
 		};
 		document.onmousemove = (event) => {
-			newClickPositionX = clickPositionX - event.clientX;
-			newClickPositionY = clickPositionY - event.clientY;
+			newElementPositionX =
+				htmlElement.offsetLeft - (clickPositionX - event.clientX);
+			newElementPositionY =
+				htmlElement.offsetTop - (clickPositionY - event.clientY);
 			clickPositionX = event.clientX;
 			clickPositionY = event.clientY;
-			element.style.top = element.offsetTop - newClickPositionY + "px";
-			element.style.left = element.offsetLeft - newClickPositionX + "px";
+			htmlElement.style.top = newElementPositionY + "px";
+			htmlElement.style.left = newElementPositionX + "px";
 		};
 	};
 	return (
@@ -59,49 +78,76 @@ const SingleSlide = (props: { slide: slide; navigation: boolean }) => {
 				!initialSlide.active && {
 					onClick: () => selectSlide(initialSlide.id),
 				})}
-			title={props.navigation ? initialSlide.header : undefined}
 		>
-			<div
-				{...(!props.navigation && {
-					id: "layout-slide-header-moveable",
-				})}
-				className={`bg-transparent rounded text-3xl absolute cursor-move left-[5%] top-[20%]  ${
-					!props.navigation &&
-					"p-5 border border-dashed focus-within:border-solid"
-				}`}
-				style={{
-					zoom: props.navigation ? "0.4" : "1",
-					maxWidth: "100%",
-					width: "90%",
-				}}
-				{...(!props.navigation && {
-					onMouseDown: (event) =>
-						moveElement(
-							event,
-							document.getElementById(
-								"layout-slide-header-moveable"
-							)
-						),
-				})}
-			>
-				<ContentEditable
-					className="p-4 focus:outline-none cursor-text"
-					html={
-						initialSlide.header.length
-							? initialSlide.header
-							: props.navigation
-							? ""
-							: "Click to add title"
-					}
-					disabled={props.navigation}
-					onChange={(event) =>
-						updateSlide({
-							...initialSlide,
-							header: event.currentTarget.innerHTML,
-						})
-					}
-				/>
-			</div>
+			{initialSlide.elements.map((renderedElement) => {
+				return (
+					<div
+						key={initialSlide.id + "_" + renderedElement.id}
+						className={`bg-transparent rounded absolute cursor-move p-5 
+						${
+							!props.navigation &&
+							"border border-dashed focus:border-solid focus-within:border-solid"
+						}`}
+						style={{
+							zoom: props.navigation ? "0.4" : "1",
+							maxWidth: "100%",
+							width: "90%",
+							top: renderedElement.position.top,
+							left: renderedElement.position.left,
+						}}
+						{...(!props.navigation && {
+							id: `layout-slide-${renderedElement.id}-moveable`,
+							tabIndex: -1,
+							onMouseDown: (event) =>
+								moveElement(
+									event,
+									document.getElementById(
+										`layout-slide-${renderedElement.id}-moveable`
+									),
+									renderedElement.id
+								),
+						})}
+					>
+						<ContentEditable
+							className={`p-4 focus:outline-none cursor-text ${
+								renderedElement.type === "title"
+									? "text-3xl"
+									: "text-xl"
+							}`}
+							html={
+								renderedElement.content.length
+									? renderedElement.content
+									: props.navigation
+									? ""
+									: renderedElement.placeholder
+							}
+							disabled={props.navigation}
+							onChange={(event) =>
+								updateSlide({
+									...initialSlide,
+									elements: initialSlide.elements.map(
+										(element) => {
+											if (
+												element.id ===
+												renderedElement.id
+											) {
+												return {
+													...element,
+													content:
+														event.currentTarget
+															.innerHTML,
+												};
+											} else {
+												return element;
+											}
+										}
+									),
+								})
+							}
+						/>
+					</div>
+				);
+			})}
 		</div>
 	);
 };

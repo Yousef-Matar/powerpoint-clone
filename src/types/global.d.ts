@@ -7,11 +7,19 @@ declare global {
 	};
 	type slide = {
 		id: string;
-		type: string;
-		header: string;
-		subHeader: string;
 		active: boolean;
+		elements:slideElement[]
 	};
+	type slideElement={
+		id:string;
+		type:string
+		content:string
+		placeholder:string
+		position:{
+			top:string;
+			left:string;
+		}
+	}
 	interface slideInterface {
 		slideID: string;
 		field: string;
