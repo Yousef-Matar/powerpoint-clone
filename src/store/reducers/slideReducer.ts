@@ -153,25 +153,22 @@ export const slideReducer = (
 			};
 		}
 		case actionTypes.PASTE_SLIDE: {
-			if (state.copiedElement != null) {
-				return {
-					...state,
-					slides: [
-						...state.slides.map((slide) => {
-							return { ...slide, active: false };
-						}),
-						{
-							...state.copiedElement,
-							id:
-								Date.now().toString(36) +
-								Math.random().toString(36).substr(2),
-							active: true,
-						},
-					],
-				};
-			} else {
-				return state;
-			}
+			if (state.copiedElement == null) return state;
+			return {
+				...state,
+				slides: [
+					...state.slides.map((slide) => {
+						return { ...slide, active: false };
+					}),
+					{
+						...state.copiedElement,
+						id:
+							Date.now().toString(36) +
+							Math.random().toString(36).substr(2),
+						active: true,
+					},
+				],
+			};
 		}
 		default: {
 			return state;

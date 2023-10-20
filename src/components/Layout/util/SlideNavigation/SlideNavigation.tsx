@@ -4,6 +4,8 @@ import SingleSlide from "../../../Slide/SingleSlide";
 const ctrlKey = "Control";
 const cKey = "c";
 const vKey = "v";
+const backspaceKey = "Backspace";
+const deleteKey = "Delete";
 const SlideNavigation = () => {
 	const dispatch = useDispatch();
 	const slides = useSelector<storeInterface, storeInterface["slides"]>(
@@ -49,7 +51,7 @@ const SlideNavigation = () => {
 					return (
 						<li
 							key={index}
-							className="min-h-[25%] relative focus:outline-none select-none"
+							className="min-h-[25%] relative focus:outline-none select-none caret-transparent"
 							onKeyDown={(event) => {
 								event.preventDefault();
 								if (event.key === ctrlKey) setCtrlDown(true);
@@ -58,11 +60,20 @@ const SlideNavigation = () => {
 										type: "COPY_ELEMENT",
 										payload: slide,
 									});
+								if (
+									event.key === deleteKey ||
+									event.key === backspaceKey
+								)
+									dispatch({
+										type: "DELETE_SLIDE",
+										payload: slide,
+									});
 							}}
 							onKeyUp={(event) => {
 								event.preventDefault();
 								if (event.key === ctrlKey) setCtrlDown(false);
 							}}
+							onClick={(event) => event.preventDefault()}
 							contentEditable
 							suppressContentEditableWarning
 						>
