@@ -21,9 +21,34 @@ const SingleSlide = (props: { slide: slide; navigation: boolean }) => {
 		setInitialSlide(props.slide);
 	}, [props.slide]);
 
+	const moveElement = (
+		event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+		element: HTMLElement | null
+	) => {
+		if (element == null) return;
+		var clickPositionX = 0;
+		var clickPositionY = 0;
+		var newClickPositionX = 0;
+		var newClickPositionY = 0;
+		clickPositionX = event.clientX;
+		clickPositionY = event.clientY;
+		document.onmouseup = () => {
+			document.onmouseup = null;
+			document.onmousemove = null;
+		};
+		document.onmousemove = (event) => {
+			newClickPositionX = clickPositionX - event.clientX;
+			newClickPositionY = clickPositionY - event.clientY;
+			clickPositionX = event.clientX;
+			clickPositionY = event.clientY;
+			element.style.top = element.offsetTop - newClickPositionY + "px";
+			element.style.left = element.offsetLeft - newClickPositionX + "px";
+		};
+	};
 	return (
 		<div
-			className={`bg-white dark:bg-black rounded p-3 ${
+			id={props.navigation ? "navigation-slide" : "layout-slide"}
+			className={`bg-white dark:bg-black rounded p-3 relative ${
 				props.navigation
 					? `h-[25vh] overflow-hidden cursor-pointer ${
 							initialSlide.active &&
@@ -37,46 +62,51 @@ const SingleSlide = (props: { slide: slide; navigation: boolean }) => {
 				})}
 			title={props.navigation ? initialSlide.header : undefined}
 		>
-			<ContentEditable
-				className={`w-full bg-transparent rounded text-3xl ${
-					!props.navigation && "p-5 border border-dashed"
+			<div
+				id={
+					props.navigation
+						? "navigation-slide-header"
+						: "layout-slide-header-moveable"
+				}
+				className={`bg-transparent rounded text-3xl absolute cursor-move  ${
+					!props.navigation &&
+					"p-5 border border-dashed focus-within:border-solid"
 				}`}
-				style={{ zoom: props.navigation ? "0.6" : "1" }}
-				html={
-					initialSlide.header.length
-						? initialSlide.header
-						: props.navigation
-						? ""
-						: "Click to add title"
-				}
-				disabled={props.navigation}
-				onChange={(event) =>
-					updateSlide({
-						...initialSlide,
-						header: event.currentTarget.innerHTML,
-					})
-				}
-			/>
-			<ContentEditable
-				className={`w-full bg-transparent rounded text-xl ${
-					!props.navigation && "p-5 border border-dashed"
-				}`}
-				style={{ zoom: props.navigation ? "0.6" : "1" }}
-				html={
-					initialSlide.subHeader.length
-						? initialSlide.subHeader
-						: props.navigation
-						? ""
-						: "Click to add subtitle"
-				}
-				disabled={props.navigation}
-				onChange={(event) =>
-					updateSlide({
-						...initialSlide,
-						subHeader: event.currentTarget.innerHTML,
-					})
-				}
-			/>
+				style={{
+					zoom: props.navigation ? "0.4" : "1",
+					maxWidth: "100%",
+					width: "90%",
+					top: "20%",
+					left: "5%",
+				}}
+				{...(!props.navigation && {
+					onMouseDown: (event) =>
+						moveElement(
+							event,
+							document.getElementById(
+								"layout-slide-header-moveable"
+							)
+						),
+				})}
+			>
+				<ContentEditable
+					className="p-4 focus:outline-none cursor-text"
+					html={
+						initialSlide.header.length
+							? initialSlide.header
+							: props.navigation
+							? ""
+							: "Click to add title"
+					}
+					disabled={props.navigation}
+					onChange={(event) =>
+						updateSlide({
+							...initialSlide,
+							header: event.currentTarget.innerHTML,
+						})
+					}
+				/>
+			</div>
 		</div>
 	);
 };
