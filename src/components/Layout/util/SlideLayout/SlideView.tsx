@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import SingleSlide from "../../../Slide/SingleSlide";
 
 const SlideView = () => {
-	const slides = useSelector<slidesInterface, slidesInterface["slides"]>(
+	const slides = useSelector<storeInterface, storeInterface["slides"]>(
 		(state) => state.slides
 	);
 

@@ -83,7 +83,7 @@ const SingleSlide = (props: { slide: slide; navigation: boolean }) => {
 				return (
 					<div
 						key={initialSlide.id + "_" + renderedElement.id}
-						className={`bg-transparent rounded absolute p-5 cursor-move
+						className={`bg-transparent rounded absolute p-5 z-0 
 						${
 							!props.navigation &&
 							"cursor-move border border-dashed focus:border-solid focus-within:border-solid"
@@ -92,6 +92,7 @@ const SingleSlide = (props: { slide: slide; navigation: boolean }) => {
 							zoom: props.navigation ? "0.4" : "1",
 							maxWidth: "100%",
 							width: "90%",
+
 							top: renderedElement.position.top,
 							left: renderedElement.position.left,
 						}}
@@ -148,6 +149,7 @@ const SingleSlide = (props: { slide: slide; navigation: boolean }) => {
 									),
 								})
 							}
+							onMouseDown={(event) => event.stopPropagation()}
 						/>
 					</div>
 				);

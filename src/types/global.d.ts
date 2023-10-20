@@ -8,24 +8,25 @@ declare global {
 	type slide = {
 		id: string;
 		active: boolean;
-		elements:slideElement[]
+		elements: slideElement[];
 	};
-	type slideElement={
-		id:string;
-		type:string
-		content:string
-		placeholder:string
-		position:{
-			top:string;
-			left:string;
-		}
-	}
+	type slideElement = {
+		id: string;
+		type: string;
+		content: string;
+		placeholder: string;
+		position: {
+			top: string;
+			left: string;
+		};
+	};
 	interface slideInterface {
 		slideID: string;
 		field: string;
 		value: string;
 	}
-	interface slidesInterface {
+	interface storeInterface {
+		copiedElement: Nullable<slide>;
 		slides: slide[];
 	}
 }

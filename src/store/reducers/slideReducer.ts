@@ -1,6 +1,7 @@
 import * as actionTypes from "../actionTypes/actionTypes";
 
-const initialState: slidesInterface = {
+const initialState: storeInterface = {
+	copiedElement: null,
 	slides: [
 		{
 			id: Date.now().toString(36) + Math.random().toString(36).substr(2),
@@ -47,9 +48,21 @@ interface updateAction {
 	type: typeof actionTypes.UPDATE_SLIDE;
 	payload: slide;
 }
+interface copyAction {
+	type: typeof actionTypes.COPY_ELEMENT;
+	payload: slide;
+}
+interface pasteSlideAction {
+	type: typeof actionTypes.PASTE_SLIDE;
+}
 export const slideReducer = (
 	state = initialState,
-	action: createAction | selectAction|updateAction
+	action:
+		| createAction
+		| selectAction
+		| updateAction
+		| copyAction
+		| pasteSlideAction
 ) => {
 	switch (action.type) {
 		case actionTypes.CREATE_SLIDE: {
@@ -132,6 +145,33 @@ export const slideReducer = (
 					}
 				}),
 			};
+		}
+		case actionTypes.COPY_ELEMENT: {
+			return {
+				...state,
+				copiedElement: action.payload,
+			};
+		}
+		case actionTypes.PASTE_SLIDE: {
+			if (state.copiedElement != null) {
+				return {
+					...state,
+					slides: [
+						...state.slides.map((slide) => {
+							return { ...slide, active: false };
+						}),
+						{
+							...state.copiedElement,
+							id:
+								Date.now().toString(36) +
+								Math.random().toString(36).substr(2),
+							active: true,
+						},
+					],
+				};
+			} else {
+				return state;
+			}
 		}
 		default: {
 			return state;
