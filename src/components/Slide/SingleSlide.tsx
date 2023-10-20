@@ -94,7 +94,16 @@ const SingleSlide = (props: { slide: slide; navigation: boolean }) => {
 				? !initialSlide.active && {
 						onClick: () => selectSlide(initialSlide.id),
 				  }
-				: { id: `slide-${initialSlide.id}` })}
+				: { id: `slide-${initialSlide.id}`,
+				onKeyDown: (event) => {
+					event.preventDefault();
+					if (event.key === ctrlKey) setCtrlDown(true);
+					if (ctrlDown && event.key === vKey)
+						dispatch({
+							type: "PASTE_ELEMENT",
+						});
+				},
+			})}
 		>
 			{initialSlide.elements.map((renderedElement) => {
 				return (
@@ -132,6 +141,10 @@ const SingleSlide = (props: { slide: slide; navigation: boolean }) => {
 										type: "COPY_ELEMENT",
 										payload: renderedElement,
 									});
+							},
+							onKeyUp: (event) => {
+								event.preventDefault();
+								if (event.key === ctrlKey) setCtrlDown(false);
 							},
 						})}
 					>
