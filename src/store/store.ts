@@ -1,4 +1,6 @@
-import { createStore } from 'redux'
-import { slideReducer } from './reducers/slideReducer'
+import { createStore } from 'redux';
+import { slideReducer } from './reducers/slideReducer';
 
-export const store = createStore(slideReducer)
+const store = createStore(slideReducer)
+store.dispatch({ type: "CREATE_SLIDE", payload: 'text' });
+export default store

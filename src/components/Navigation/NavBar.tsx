@@ -11,6 +11,9 @@ const useDidMount = () => {
 const NavBar = () => {
 	const didMount = useDidMount();
 	const dispatch = useDispatch();
+	const [boldActive, setBoldActive] = useState(false);
+	const [italicActive, setItalicActive] = useState(true);
+	const [underlineActive, setUnderlineActive] = useState(true);
 	const [tabs, setTabs] = useState([
 		{ text: "Home", visible: true },
 		{ text: "Insert", visible: false },
@@ -96,7 +99,62 @@ const NavBar = () => {
 			</div>
 			<div className="flex items-center flex-wrap px-1 bg-slate-500 dark:bg-slate-900">
 				<div id="home-content" className="flex gap-3">
-					Home Tab
+					<button
+						className={`p-1 border border-slate-900 rounded ${
+							boldActive
+								? "dark:bg-slate-500"
+								: "dark:bg-transparent"
+						}`}
+						onClick={() => setBoldActive(!boldActive)}
+					>
+						Bold
+					</button>
+					<button
+						className={`p-1 border border-slate-900 rounded ${
+							italicActive
+								? "dark:bg-slate-500"
+								: "dark:bg-transparent"
+						}`}
+						onClick={() => setItalicActive(!italicActive)}
+					>
+						Italic
+					</button>
+					<button
+						className="p-1 border border-slate-900 dark:bg-slate-500 rounded"
+						onClick={() => {
+							console.log("Underline");
+						}}
+					>
+						Underline
+					</button>
+					<button
+						className="p-1 border border-slate-900 dark:bg-slate-500 rounded"
+						onClick={() => {
+							console.log("Strike Through");
+						}}
+					>
+						Strike Through
+					</button>
+					<select
+						className="p-1 border border-slate-900 dark:bg-slate-500 rounded text-sm"
+						onChange={(event) =>
+							console.log("Font size changed", event.target.value)
+						}
+					>
+						<option value="0.5">8</option>
+						<option value="0.625">10</option>
+						<option value="0.75">12</option>
+						<option value="0.875">14</option>
+						<option value="1">16</option>
+						<option value="1.125">18</option>
+						<option value="1.25">20</option>
+						<option value="1.375">22</option>
+						<option value="1.5">24</option>
+						<option value="1.625">26</option>
+						<option value="1.75">28</option>
+						<option value="1.875">30</option>
+						<option value="2">32</option>
+					</select>
 				</div>
 				<div id="insert-content" className="hidden">
 					<div className="inline-flex">

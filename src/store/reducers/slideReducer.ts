@@ -2,36 +2,7 @@ import * as actionTypes from "../actionTypes/actionTypes";
 
 const initialState: storeInterface = {
 	copiedElement: null,
-	slides: [
-		{
-			id: Date.now().toString(36) + Math.random().toString(36).substr(2),
-			active: true,
-			elements: [
-				{
-					id:
-						Date.now().toString(36) +
-						Math.random().toString(36).substr(2),
-					type: "title",
-					content: "<div>Slide 1</div>",
-					position: {
-						top: "5%",
-						left: "5%",
-					},
-				},
-				{
-					id:
-						Date.now().toString(36) +
-						Math.random().toString(36).substr(2),
-					type: "subtitle",
-					content: "<div>Sub title</div>",
-					position: {
-						top: "30%",
-						left: "5%",
-					},
-				},
-			],
-		},
-	],
+	slides: [],
 };
 
 interface createAction {

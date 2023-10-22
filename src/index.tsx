@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 // Redux
 import { Provider } from "react-redux";
-import { store } from "./store/store";
+import store from "./store/store";
 // Components
 import LayoutView from "./components/Layout/LayoutView";
 import NavBar from "./components/Navigation/NavBar";
