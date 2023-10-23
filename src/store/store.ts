@@ -1,6 +1,7 @@
 import { createStore } from 'redux';
-import { slideReducer } from './reducers/slideReducer';
+import { powerpointReducer } from './reducers/powerpointReducer';
 
-const store = createStore(slideReducer)
-store.dispatch({ type: "CREATE_SLIDE", payload: 'text' });
+const store = createStore(powerpointReducer)
+store.dispatch({ type: "CREATE_SLIDE" });
 export default store
+
