@@ -12,18 +12,22 @@ declare global {
 	interface IPowerpoint {
 		slides: Readonly<ISlide[]>;
 		activeSlide: Nullable<ISlide>;
+		copiedElement: ISlide | ISlideElement;
 		addNewSlide: Function;
-		pasteSlide: Function;
 		deleteSlide: Function;
+		pasteElement: Function;
 	}
 	interface ISlide {
-		elements:ISlideElement[]
-		addElement:Function
-		addElements:Function
-		removeElement:Function
-		updateElement:Function
+		elements: ISlideElement[];
+		selectedElement: Nullable<ISlideElement>;
+		addElement: Function;
+		addElements: Function;
+		removeElement: Function;
+		updateElement: Function;
 	}
 	interface ISlideElement {
-		content:string;
+		content?: string;
+		position?: IElementPosition;
+		size?: IElementSize;
 	}
 }
