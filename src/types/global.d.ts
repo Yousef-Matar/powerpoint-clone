@@ -9,20 +9,6 @@ declare global {
 		width: number;
 		height: number;
 	}
-	interface IPowerpoint {
-		slides: Readonly<slide[]>;
-		addNewSlide: Function;
-		copySlide: Function;
-		deleteSlide: Function;
-	}
-	type SlideElementProps = {
-		content?: string;
-		drawableProps?: drawableProps;
-	};
-	type drawableProps = {
-		position?: IElementPosition;
-		size?: IElementSize;
-	};
 	type slide = {
 		id: string;
 		elements: slideElement[];

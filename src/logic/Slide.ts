@@ -1,11 +1,10 @@
 class Slide {
 	id: Readonly<string>;
-	size?: IElementSize;
 	private _elements: slideElement[];
-	constructor(elements?: slideElement[]) {
+	constructor(slide?:slide) {
 		this.id =
 			Date.now().toString(36) + Math.random().toString(36).substr(2);
-		this._elements = elements || [];
+		this._elements = slide?.elements || [];
 	}
 	addElement(slideElement: slideElement): void {
 		this._elements.push(slideElement);

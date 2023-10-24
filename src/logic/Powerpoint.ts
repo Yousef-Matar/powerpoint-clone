@@ -1,5 +1,5 @@
 import Slide from "./Slide";
-class Powerpoint implements IPowerpoint {
+class Powerpoint {
 	private static _powerpoint: Nullable<Powerpoint> = null;
 	private _slides: slide[] = [];
 	private _activeSlide: Nullable<slide> = null;
@@ -15,8 +15,8 @@ class Powerpoint implements IPowerpoint {
 		this._activeSlide = this._slides[this._slides.length - 1];
 	}
 	copySlide(slide: slide): void {
-		this._slides.push(slide);
-		this._activeSlide = slide;
+		this._slides.push(new Slide(slide));
+		this._activeSlide = this._slides[this._slides.length - 1];
 	}
 	deleteSlide(slide: slide): void {
 		this._activeSlide = this._cycleArray(slide);

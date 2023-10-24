@@ -1,13 +1,13 @@
 import Drawable from "./Drawable";
 
-class SlideElement extends Drawable {
+class SlideElement extends Drawable{
 	id: Readonly<string>;
 	content: string;
-	constructor(props: SlideElementProps) {
-		super(props.drawableProps);
+	constructor(slideElement?: slideElement) {
+		super(slideElement?.position,slideElement?.size);
 		this.id =
 			Date.now().toString(36) + Math.random().toString(36).substr(2);
-		this.content = props.content || "";
+		this.content = slideElement?.content || "";
 	}
 }
 export default SlideElement;
