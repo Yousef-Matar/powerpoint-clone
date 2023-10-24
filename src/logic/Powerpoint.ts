@@ -1,3 +1,4 @@
+import { cloneDeep } from "lodash";
 import Slide from "./Slide";
 import SlideElement from "./SlideElement";
 class Powerpoint implements IPowerpoint {
@@ -19,10 +20,15 @@ class Powerpoint implements IPowerpoint {
 	deleteSlide(): void {
 		let deletedSlide = this._activeSlide as ISlide;
 		if (deletedSlide === this._copiedElement) this._copiedElement = null;
-		this._activeSlide = this._cycleArray(deletedSlide);
+		if (this._slides.length > 1) {
+			this._activeSlide = this._cycleArray(deletedSlide);
+		} else {
+			this._activeSlide = null;
+		}
 		this._slides.splice(this._slides.indexOf(deletedSlide), 1);
 	}
 	pasteElement(): void {
+		if (this._copiedElement == null) return;
 		if ((this._copiedElement as ISlide).elements != null) {
 			this._slides.push(
 				new Slide({ ...(this._copiedElement as ISlide) })
@@ -38,7 +44,7 @@ class Powerpoint implements IPowerpoint {
 		this._activeSlide = slide;
 	}
 	set copiedElement(selectedElement: ISlide | ISlideElement) {
-		this._copiedElement = selectedElement;
+		this._copiedElement = cloneDeep(selectedElement);
 	}
 	get activeSlide(): Readonly<Nullable<ISlide>> {
 		return this._activeSlide;
