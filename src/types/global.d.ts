@@ -1,4 +1,4 @@
-export {};
+export { };
 declare global {
 	type Nullable<T> = T | null;
 	interface IElementPosition {
@@ -8,6 +8,12 @@ declare global {
 	interface IElementSize {
 		width: number;
 		height: number;
+	}
+	interface IPowerpoint {
+		slides: Readonly<slide[]>;
+		addNewSlide: Function;
+		copySlide: Function;
+		deleteSlide: Function;
 	}
 	type SlideElementProps = {
 		content?: string;
@@ -27,32 +33,4 @@ declare global {
 		position: IElementPosition;
 		size: IElementSize;
 	};
-
-	// type NavTab = {
-	// 	text: string;
-	// 	visible: boolean;
-	// };
-	// type slide = {
-	// 	id: string;
-	// 	active: boolean;
-	// 	elements: slideElement[];
-	// };
-	// type slideElement = {
-	// 	id: string;
-	// 	type: string;
-	// 	content: string;
-	// 	position: {
-	// 		top: string;
-	// 		left: string;
-	// 	};
-	// };
-	// interface slideInterface {
-	// 	slideID: string;
-	// 	field: string;
-	// 	value: string;
-	// }
-	// interface storeInterface {
-	// 	copiedElement: Nullable<slideElement|slide>;
-	// 	slides: Array<slide>;
-	// }
 }

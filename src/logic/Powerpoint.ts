@@ -1,8 +1,15 @@
 import Slide from "./Slide";
-class Powerpoint {
+class Powerpoint implements IPowerpoint {
+	private static _powerpoint: Nullable<Powerpoint> = null;
 	private _slides: slide[] = [];
 	private _activeSlide: Nullable<slide> = null;
+	private constructor() {}
+	static getInstance(): Powerpoint {
+		if (Powerpoint._powerpoint == null)
+			Powerpoint._powerpoint = new Powerpoint();
 
+		return Powerpoint._powerpoint;
+	}
 	addNewSlide(): void {
 		this._slides.push(new Slide());
 		this._activeSlide = this._slides[this._slides.length - 1];
