@@ -9,14 +9,4 @@ declare global {
 		width: number;
 		height: number;
 	}
-	type slide = {
-		id: string;
-		elements: slideElement[];
-	};
-	type slideElement = {
-		id: string;
-		content: string;
-		position: IElementPosition;
-		size: IElementSize;
-	};
 }

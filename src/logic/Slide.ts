@@ -1,28 +1,30 @@
+import SlideElement from "./SlideElement";
+
 class Slide {
 	id: Readonly<string>;
-	private _elements: slideElement[];
-	constructor(slide?:slide) {
+	private _elements: SlideElement[];
+	constructor(slide?:Slide) {
 		this.id =
 			Date.now().toString(36) + Math.random().toString(36).substr(2);
 		this._elements = slide?.elements || [];
 	}
-	addElement(slideElement: slideElement): void {
+	addElement(slideElement: SlideElement): void {
 		this._elements.push(slideElement);
 	}
-	addElements(slideElements: slideElement[]): void {
+	addElements(slideElements: SlideElement[]): void {
 		this._elements.push(...slideElements);
 	}
-	removeElement(element: slideElement): void {
+	removeElement(element: SlideElement): void {
 		this._elements.splice(this._elements.indexOf(element), 1);
 	}
-	updateElement(oldElement: slideElement, newElement: slideElement): void {
+	updateElement(oldElement: SlideElement, newElement: SlideElement): void {
 		this._elements.splice(
 			this._elements.indexOf(oldElement),
 			1,
 			newElement
 		);
 	}
-	get elements(): slideElement[] {
+	get elements(): SlideElement[] {
 		return this._elements;
 	}
 }
