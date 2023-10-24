@@ -1,6 +1,6 @@
 import Drawable from "./Drawable";
 
-class SlideElement extends Drawable{
+class SlideElement extends Drawable implements ISlideElement{
 	id: Readonly<string>;
 	content: string;
 	constructor(slideElement?: SlideElement) {
