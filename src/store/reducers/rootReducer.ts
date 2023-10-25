@@ -1,6 +1,5 @@
 import { cloneDeep } from "lodash";
 import Powerpoint from "../../logic/Powerpoint";
-import SlideElement from "../../logic/SlideElement";
 import * as actionTypes from "../actionTypes/actionTypes";
 interface storeAction {
 	type:
