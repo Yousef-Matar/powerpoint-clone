@@ -7,7 +7,7 @@ const ActiveSlide = () => {
 	);
 	return (
 		<div className="min-w-[60%] max-w-[80%] overflow-auto p-10 flex-grow">
-			<SingleSlide slide={activeSlide} />
+			<SingleSlide slide={activeSlide} navigation={false} />
 		</div>
 	);
 };
