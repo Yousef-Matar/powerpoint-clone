@@ -7,7 +7,6 @@ import store from "./store/store";
 // Components
 import LayoutView from "./components/Layout/LayoutView";
 import NavBar from "./components/Navigation/NavBar";
-// import NavBar from "./components/Navigation/NavBar";
 const App = () => {
 	return (
 		<div className="flex flex-col min-h-screen min-w-full bg-neutral-800 text-white">
