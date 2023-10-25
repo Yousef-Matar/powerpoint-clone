@@ -22,11 +22,17 @@ const App = () => {
 			});
 		}
 	};
+	const handleCtrlKeyUp = (pressedKey: string) => {
+		if (pressedKey === keyboard.ctrlKey) {
+			setHoldingCTRL(false);
+		}
+	};
 	return (
 		<div
 			className="flex flex-col min-h-screen min-w-full bg-neutral-800 text-white"
 			tabIndex={-1}
 			onKeyDown={(event) => handlePasteElement(event.key)}
+			onKeyUp={(event) => handleCtrlKeyUp(event.key)}
 		>
 			<NavBar />
 			<LayoutView />

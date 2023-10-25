@@ -24,6 +24,11 @@ const SlideNavigation = () => {
 			});
 		}
 	};
+	const handleCtrlKeyUp = (pressedKey: string) => {
+		if (pressedKey === keyboard.ctrlKey) {
+			setHoldingCTRL(false);
+		}
+	};
 	useEffect(() => {
 		document
 			.getElementById(`slide-${powerpoint.activeSlide?.id}`)
@@ -38,7 +43,7 @@ const SlideNavigation = () => {
 		<div
 			id="slide-navigation"
 			tabIndex={-1}
-			className="min-w-[20%] max-w-[40%] p-10 overflow-y-auto flex flex-col gap-4 cursor-default h-full focus:outline-none"
+			className="min-w-[25%] max-w-[40%] p-10 overflow-y-auto flex flex-col gap-4 cursor-default h-full focus:outline-none"
 			onKeyDown={(event) => handleDeleteSlide(event.key)}
 		>
 			{powerpoint.slides.map((slide, index) => {
@@ -47,7 +52,7 @@ const SlideNavigation = () => {
 						id={`slide-${slide.id}`}
 						key={slide.id}
 						tabIndex={-1}
-						className={`min-h-[25%] relative ${
+						className={`min-h-[25%] min-w-full relative ${
 							powerpoint.activeSlide?.id === slide.id
 								? "border-8 border-sky-600"
 								: "cursor-pointer"
@@ -61,6 +66,7 @@ const SlideNavigation = () => {
 								});
 						}}
 						onKeyDown={(event) => handleCopySlide(event.key)}
+						onKeyUp={(event) => handleCtrlKeyUp(event.key)}
 					>
 						<div className="absolute left-[-30px] top-0">
 							{index + 1}.
