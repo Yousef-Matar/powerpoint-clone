@@ -1,14 +1,23 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import * as keyboard from "../../../constants/keyboardKeys.constants";
 import SingleSlide from "../../Slide/SingleSlide";
-
 const SlideNavigation = () => {
 	const dispatch = useDispatch();
 	const powerpoint = useSelector<IPowerpoint, IPowerpoint>((state) => state);
+	const handleDeleteSlide = (pressedKey: string) => {
+		if ([keyboard.deleteKey, keyboard.backspaceKey].includes(pressedKey)) {
+			dispatch({
+				type: "DELETE_SLIDE",
+			});
+		}
+	};
 	return (
 		<div
 			id="slide-navigation"
-			className="min-w-[20%] max-w-[40%] p-10 overflow-y-auto flex flex-col gap-4 cursor-default h-full"
+			className="min-w-[20%] max-w-[40%] p-10 overflow-y-auto flex flex-col gap-4 cursor-default h-full focus:outline-none"
+			tabIndex={-1}
+			onKeyDown={(event) => handleDeleteSlide(event.key)}
 		>
 			{powerpoint.slides.map((slide, index) => {
 				return (

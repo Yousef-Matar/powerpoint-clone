@@ -56,10 +56,15 @@ class Powerpoint implements IPowerpoint {
 	get slides(): Readonly<ISlide[]> {
 		return this._slides;
 	}
-	private _cycleArray(slide: ISlide): Nullable<ISlide> {
-		const index = this._slides.indexOf(slide);
-		if (index === -1) return null;
-		return this._slides[(index + 1) % this._slides.length];
+	private _cycleArray(slide: ISlide): ISlide {
+		var index = this._slides.indexOf(slide);
+		// the -2 is because the active slide is changed before deletion
+		if ((index + 1) % this._slides.length === 0) {
+			index = this._slides.length - 2;
+		} else {
+			index = (index + 1) % this._slides.length;
+		}
+		return this._slides[index];
 	}
 }
 export default Powerpoint;
