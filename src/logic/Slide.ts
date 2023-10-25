@@ -1,3 +1,5 @@
+import SlideElement from "./SlideElement";
+
 class Slide implements ISlide {
 	private _id: Readonly<string>;
 	private _elements: ISlideElement[];
@@ -7,16 +9,12 @@ class Slide implements ISlide {
 			Date.now().toString(36) + Math.random().toString(36).substr(2);
 		this._elements = slide?.elements || [];
 	}
-	addElement(slideElement: ISlideElement): void {
-		this._elements.push(slideElement);
-		this._selectedElement = slideElement;
-	}
-	addElements(slideElements: ISlideElement[]): void {
-		this._elements.push(...slideElements);
+	addElement(): void {
+		this._elements.push(new SlideElement());
 		this._selectedElement = this._elements[this._elements.length - 1];
 	}
 	removeElement(element: ISlideElement): void {
-		if (element === this._selectedElement) {
+		if (element.id === this._selectedElement?.id) {
 			this._selectedElement = null;
 		}
 		this._elements.splice(this._elements.indexOf(element), 1);

@@ -64,17 +64,15 @@ const NavBar = () => {
 				>
 					<button
 						className="p-1 rounded focus:bg-neutral-600 hover:bg-neutral-500"
-						onClick={() => {
-							dispatch({ type: "CREATE_SLIDE" });
-						}}
+						onClick={() => dispatch({ type: "CREATE_SLIDE" })}
 					>
 						New Slide
 					</button>
 					<button
 						className="p-1 rounded focus:bg-neutral-600 hover:bg-neutral-500"
-						onClick={(event) => console.log(event)}
+						onClick={() => dispatch({ type: "CREATE_SLIDE_ELEMENT" })}
 					>
-						Text box
+						Insert Element
 					</button>
 				</div>
 			</div>

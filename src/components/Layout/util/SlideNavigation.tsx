@@ -18,16 +18,19 @@ const SlideNavigation = () => {
 								? "border-8 border-sky-600"
 								: "cursor-pointer"
 						}`}
-						key={index}
+						key={slide.id}
 						onClick={(event) => {
 							event.preventDefault();
-							dispatch({
-								type: "SELECT_SLIDE",
-								payload: slide,
-							});
+							if (powerpoint.activeSlide?.id !== slide.id)
+								dispatch({
+									type: "SELECT_SLIDE",
+									payload: index,
+								});
 						}}
 					>
-                   <div className="absolute left-[-30px] top-0">{index + 1}.</div>
+						<div className="absolute left-[-30px] top-0">
+							{index + 1}.
+						</div>
 						<SingleSlide slide={slide} navigation={true} />
 					</div>
 				);

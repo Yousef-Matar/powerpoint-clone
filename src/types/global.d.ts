@@ -22,11 +22,11 @@ declare global {
 		elements: ISlideElement[];
 		selectedElement: Nullable<ISlideElement>;
 		addElement: Function;
-		addElements: Function;
 		removeElement: Function;
 		updateElement: Function;
 	}
 	interface ISlideElement {
+		id: Readonly<string>;
 		content?: string;
 		position?: IElementPosition;
 		size?: IElementSize;
