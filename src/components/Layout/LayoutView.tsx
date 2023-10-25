@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ActiveSlide from "./util/ActiveSlide";
+import SlideNavigation from "./util/SlideNavigation";
 
 const LayoutView = () => {
 	const [navBarHeight, setNavBarHeight] = useState<number>(0);
@@ -26,21 +27,19 @@ const LayoutView = () => {
 			}}
 			onMouseMove={(event) => {
 				if (dragging) {
-					event.preventDefault()
+					event.preventDefault();
 					setMoveX(event.clientX);
 					calculateSlideNavigationWidth();
 				}
 			}}
 			onMouseUp={() => setDragging(false)}
 		>
-			<div id="slide-navigation" className="min-w-[20%] max-w-[40%] p-10">
-				Left Section {moveX}
-			</div>
+			<SlideNavigation />
 			<div
 				id="layout-splitter"
 				className="min-w-[0.5rem] max-w-[0.5rem] bg-neutral-600 cursor-col-resize"
 				onMouseDown={(event) => {
-					event.preventDefault()
+					event.preventDefault();
 					setDragging(true);
 					setMoveX(event.clientX);
 				}}

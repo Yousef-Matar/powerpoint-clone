@@ -1,9 +1,9 @@
 class Slide implements ISlide {
-	id: Readonly<string>;
+	private _id: Readonly<string>;
 	private _elements: ISlideElement[];
 	private _selectedElement: Nullable<ISlideElement> = null;
 	constructor(slide?: ISlide) {
-		this.id =
+		this._id =
 			Date.now().toString(36) + Math.random().toString(36).substr(2);
 		this._elements = slide?.elements || [];
 	}
@@ -21,9 +21,12 @@ class Slide implements ISlide {
 		}
 		this._elements.splice(this._elements.indexOf(element), 1);
 	}
-	updateElement(slideElement:ISlideElement): void {
+	updateElement(slideElement: ISlideElement): void {
 		if (this._selectedElement == null) return;
-		this._selectedElement = Object.assign(this._selectedElement, slideElement);
+		this._selectedElement = Object.assign(
+			this._selectedElement,
+			slideElement
+		);
 	}
 	set selectedElement(ISlideElement) {
 		this._selectedElement = ISlideElement;
@@ -33,6 +36,9 @@ class Slide implements ISlide {
 	}
 	get elements(): ISlideElement[] {
 		return this._elements;
+	}
+	get id(): Readonly<string> {
+		return this._id;
 	}
 }
 export default Slide;

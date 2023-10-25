@@ -18,6 +18,7 @@ declare global {
 		pasteElement: Function;
 	}
 	interface ISlide {
+		id: Readonly<string>;
 		elements: ISlideElement[];
 		selectedElement: Nullable<ISlideElement>;
 		addElement: Function;
