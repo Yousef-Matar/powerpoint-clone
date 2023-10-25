@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-
-const NavBar = React.forwardRef<HTMLDivElement>((props, ref) => {
+import { useDispatch } from "react-redux";
+const NavBar = () => {
+	const dispatch = useDispatch();
 	const [activeTab, setActiveTab] = useState<Nullable<string>>("home");
 	const tabs = [
 		{ key: "home", text: "Home" },
@@ -12,22 +13,22 @@ const NavBar = React.forwardRef<HTMLDivElement>((props, ref) => {
 				setActiveTab(clickedTabKey);
 				break;
 			}
-			case 2: {
-				setActiveTab(null);
-				break;
-			}
+			// case 2: {
+			// 	setActiveTab(null);
+			// 	break;
+			// }
 			default: {
 				break;
 			}
 		}
 	};
 	return (
-		<div id="nav-bar" ref={ref}>
+		<div id="nav-bar">
 			<div className="bg-neutral-600 p-1 flex gap-1">
 				{tabs.map((tab) => {
 					return (
 						<button
-							className={`p-3 rounded ${
+							className={`p-1 rounded ${
 								activeTab === tab.key ? "bg-neutral-900" : ""
 							}`}
 							key={tab.key}
@@ -52,7 +53,7 @@ const NavBar = React.forwardRef<HTMLDivElement>((props, ref) => {
 						className="p-1 rounded focus:bg-neutral-600 hover:bg-neutral-500"
 						onClick={(event) => console.log(event)}
 					>
-						New Slide
+						Home
 					</button>
 				</div>
 				<div
@@ -63,14 +64,22 @@ const NavBar = React.forwardRef<HTMLDivElement>((props, ref) => {
 				>
 					<button
 						className="p-1 rounded focus:bg-neutral-600 hover:bg-neutral-500"
-						onClick={(event) => console.log(event)}
+						onClick={() => {
+							dispatch({ type: "CREATE_SLIDE" });
+						}}
 					>
 						New Slide
+					</button>
+					<button
+						className="p-1 rounded focus:bg-neutral-600 hover:bg-neutral-500"
+						onClick={(event) => console.log(event)}
+					>
+						Text box
 					</button>
 				</div>
 			</div>
 		</div>
 	);
-});
+};
 
 export default NavBar;

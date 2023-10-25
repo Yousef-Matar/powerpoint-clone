@@ -3,14 +3,18 @@ import Slide from "./Slide";
 import SlideElement from "./SlideElement";
 class Powerpoint implements IPowerpoint {
 	private static _powerpoint: Nullable<IPowerpoint> = null;
-	private _slides: ISlide[] = [];
-	private _activeSlide: Nullable<ISlide> = null;
-	private _copiedElement: Nullable<ISlide | ISlideElement> = null;
-	private constructor() {}
+	private _slides: ISlide[];
+	private _activeSlide: Nullable<ISlide>;
+	private _copiedElement: Nullable<ISlide | ISlideElement>;
+	private constructor() {
+		this._slides = [];
+		this._activeSlide = null;
+		this._copiedElement = null;
+	}
 	static getInstance(): IPowerpoint {
-		if (Powerpoint._powerpoint == null)
+		if (Powerpoint._powerpoint == null) {
 			Powerpoint._powerpoint = new Powerpoint();
-
+		}
 		return Powerpoint._powerpoint;
 	}
 	addNewSlide(): void {
