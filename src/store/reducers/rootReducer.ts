@@ -1,6 +1,6 @@
+import { cloneDeep } from "lodash";
 import Powerpoint from "../../logic/Powerpoint";
 import * as actionTypes from "../actionTypes/actionTypes";
-
 interface storeAction {
 	type:
 		| typeof actionTypes.CREATE_SLIDE
@@ -23,24 +23,29 @@ export const rootReducer = (
 ) => {
 	switch (action.type) {
 		case actionTypes.CREATE_SLIDE: {
-			state.addNewSlide();
-			return state;
+			let updatedState = cloneDeep(state);
+			updatedState.addNewSlide();
+			return updatedState;
 		}
 		case actionTypes.SELECT_SLIDE: {
-			state.activeSlide = action.payload;
-			return state;
+			let updatedState = cloneDeep(state);
+			updatedState.activeSlide = action.payload;
+			return updatedState;
 		}
 		case actionTypes.DELETE_SLIDE: {
-			state.deleteSlide();
-			return state;
+			let updatedState = cloneDeep(state);
+			updatedState.deleteSlide();
+			return updatedState;
 		}
 		case actionTypes.COPY_ELEMENT: {
-			state.copiedElement = action.payload;
-			return state;
+			let updatedState = cloneDeep(state);
+			updatedState.copiedElement = action.payload;
+			return updatedState;
 		}
 		case actionTypes.PASTE_ELEMENT: {
-			state.pasteElement();
-			return state;
+			let updatedState = cloneDeep(state);
+			updatedState.pasteElement();
+			return updatedState;
 		}
 		default: {
 			return state;
