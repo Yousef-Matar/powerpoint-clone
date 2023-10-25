@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { RefObject, useState } from "react";
 import ActiveSlide from "./util/ActiveSlide";
-
-const LayoutView = () => {
+interface ILayoutViewProps {
+	navBarRef?: RefObject<HTMLDivElement>;
+}
+const LayoutView = (props: ILayoutViewProps) => {
 	const slideNavigationSection = document.getElementById("slide-navigation");
 	const layoutSplitter = document.getElementById("layout-splitter");
 	const [moveX, setMoveX] = useState(0);
@@ -14,7 +16,10 @@ const LayoutView = () => {
 	};
 	return (
 		<div
-			className={`flex flex-1 ${dragging && "cursor-col-resize"}`}
+			className={`flex ${dragging && "cursor-col-resize"}`}
+			style={{
+				height: `calc(100vh - ${props.navBarRef?.current?.clientHeight}px)`,
+			}}
 			onMouseMove={(event) => {
 				if (dragging) {
 					setMoveX(event.clientX);
