@@ -44,11 +44,19 @@ class Powerpoint implements IPowerpoint {
 			);
 		}
 	}
+	copyElement(selectedElementType: string) {
+		if (selectedElementType === "slide") {
+			this._copiedElement = cloneDeep(this._activeSlide);
+		} else if (selectedElementType === "slideElement") {
+			this._copiedElement = cloneDeep(
+				this._activeSlide?.selectedElement || null
+			);
+		} else {
+			this._copiedElement = null;
+		}
+	}
 	set activeSlide(slide: Nullable<ISlide>) {
 		this._activeSlide = slide;
-	}
-	set copiedElement(selectedElement: ISlide | ISlideElement) {
-		this._copiedElement = cloneDeep(selectedElement);
 	}
 	get activeSlide(): Readonly<Nullable<ISlide>> {
 		return this._activeSlide;

@@ -10,9 +10,9 @@ export const selectSlide = (slideIndex: number) => ({
 export const deleteSlide = () => ({
 	type: actionTypes.DELETE_SLIDE,
 });
-export const copyElement = (copiedElement: ISlide | ISlideElement) => ({
+export const copyElement = (copiedElementType: string) => ({
 	type: actionTypes.COPY_ELEMENT,
-	payload: copiedElement,
+	payload: copiedElementType,
 });
 export const pasteElement = () => ({
 	type: actionTypes.PASTE_ELEMENT,

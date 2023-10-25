@@ -41,7 +41,7 @@ export const rootReducer = (
 		}
 		case actionTypes.COPY_ELEMENT: {
 			let updatedState = cloneDeep(state);
-			updatedState.copiedElement = action.payload;
+			updatedState.copyElement(action.payload);
 			return updatedState;
 		}
 		case actionTypes.PASTE_ELEMENT: {

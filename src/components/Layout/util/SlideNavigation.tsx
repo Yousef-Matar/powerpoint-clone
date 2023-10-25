@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as keyboard from "../../../constants/keyboardKeys.constants";
 import SingleSlide from "../../Slide/SingleSlide";
 const SlideNavigation = () => {
 	const dispatch = useDispatch();
 	const powerpoint = useSelector<IPowerpoint, IPowerpoint>((state) => state);
+	const [holdingCTRL, setHoldingCTRL] = useState(false);
 	const handleDeleteSlide = (pressedKey: string) => {
 		if ([keyboard.deleteKey, keyboard.backspaceKey].includes(pressedKey)) {
 			dispatch({
@@ -12,30 +13,54 @@ const SlideNavigation = () => {
 			});
 		}
 	};
+	const handleCopySlide = (pressedKey: string) => {
+		if (pressedKey === keyboard.ctrlKey) {
+			setHoldingCTRL(true);
+		}
+		if (holdingCTRL && pressedKey === keyboard.cKey) {
+			dispatch({
+				type: "COPY_ELEMENT",
+				payload: "slide",
+			});
+		}
+	};
+	useEffect(() => {
+		document
+			.getElementById(`slide-${powerpoint.activeSlide?.id}`)
+			?.scrollIntoView({
+				behavior: "smooth",
+				block: "end",
+				inline: "nearest",
+			});
+	}, [powerpoint.activeSlide]);
+
 	return (
 		<div
 			id="slide-navigation"
-			className="min-w-[20%] max-w-[40%] p-10 overflow-y-auto flex flex-col gap-4 cursor-default h-full focus:outline-none"
 			tabIndex={-1}
+			className="min-w-[20%] max-w-[40%] p-10 overflow-y-auto flex flex-col gap-4 cursor-default h-full focus:outline-none"
 			onKeyDown={(event) => handleDeleteSlide(event.key)}
 		>
 			{powerpoint.slides.map((slide, index) => {
 				return (
 					<div
+						id={`slide-${slide.id}`}
+						key={slide.id}
+						tabIndex={-1}
 						className={`min-h-[25%] relative ${
 							powerpoint.activeSlide?.id === slide.id
 								? "border-8 border-sky-600"
 								: "cursor-pointer"
 						}`}
-						key={slide.id}
 						onClick={(event) => {
-							event.preventDefault();
+							event.currentTarget.parentElement?.focus();
 							if (powerpoint.activeSlide?.id !== slide.id)
 								dispatch({
 									type: "SELECT_SLIDE",
 									payload: index,
 								});
 						}}
+						onKeyDown={(event) => handleCopySlide(event.key)}
 					>
 						<div className="absolute left-[-30px] top-0">
 							{index + 1}.

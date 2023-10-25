@@ -12,7 +12,7 @@ declare global {
 	interface IPowerpoint {
 		slides: Readonly<ISlide[]>;
 		activeSlide: Nullable<ISlide>;
-		copiedElement: ISlide | ISlideElement;
+		copyElement: Function;
 		addNewSlide: Function;
 		deleteSlide: Function;
 		pasteElement: Function;
