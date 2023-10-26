@@ -10,9 +10,6 @@ const SlideElement = (props: ISlideElementProps) => {
 	const activeSlide = useSelector<IPowerpoint, IPowerpoint["activeSlide"]>(
 		(state) => state.activeSlide
 	);
-	const TEST = useSelector<IPowerpoint, IPowerpoint>(
-		(state) => state
-	);
 	const [holdingCTRL, setHoldingCTRL] = useState(false);
 	const handleSelectSlideElement = () => {
 		if (activeSlide?.selectedElement?.id !== props.slideElement.id) {
@@ -148,7 +145,7 @@ const SlideElement = (props: ISlideElementProps) => {
 				onKeyUp: (event) => handleCtrlKeyUp(event.key),
 			})}
 		>
-			<pre>{JSON.stringify(TEST, null, 2)}</pre>
+			<pre>{JSON.stringify(activeSlide, null, 2)}</pre>
 		</div>
 	);
 };
