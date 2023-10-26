@@ -7,7 +7,7 @@ class SlideElement extends Drawable implements ISlideElement {
 		super(slideElement?.position, slideElement?.size);
 		this._id =
 			Date.now().toString(36) + Math.random().toString(36).substr(2);
-		this.content = slideElement?.content || "";
+		this.content = slideElement?.content || "213213";
 	}
 	get id(): Readonly<string> {
 		return this._id;

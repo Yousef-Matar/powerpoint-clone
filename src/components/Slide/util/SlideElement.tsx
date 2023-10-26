@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ContentEditable from "react-contenteditable";
 import { useDispatch, useSelector } from "react-redux";
 import * as keyboard from "../../../constants/keyboardKeys.constants";
 import {
@@ -7,6 +8,7 @@ import {
 	selectSlideElement,
 	updateSlideElement,
 } from "../../../store/actions/actions";
+import { useDebounce } from "../../../util/Debounce";
 interface ISlideElementProps {
 	slideElement: ISlideElement;
 	navigation: boolean;
@@ -120,11 +122,20 @@ const SlideElement = (props: ISlideElementProps) => {
 			setHoldingCTRL(false);
 		}
 	};
+	// Update Slide Element Content
+	const updateContent = useDebounce((value: string) => {
+		dispatch(
+			updateSlideElement({
+				...props.slideElement,
+				content: value,
+			})
+		);
+	}, 300);
 	return (
 		<div
 			className={`bg-transparent rounded absolute ${
 				props.navigation
-					? `preview-slide p-1`
+					? `preview-slide p-2`
 					: `p-5 border ${
 							props.slideElement.content?.length === 0 &&
 							"border-dashed"
@@ -145,7 +156,18 @@ const SlideElement = (props: ISlideElementProps) => {
 				onKeyUp: (event) => handleCtrlKeyUp(event.key),
 			})}
 		>
-			<pre>{JSON.stringify(activeSlide, null, 2)}</pre>
+			<ContentEditable
+				className={`focus:outline-none ${
+					props.navigation ? "p-1 cursor-pointer" : "p-4 cursor-text"
+				}`}
+				html={props.slideElement.content}
+				disabled={props.navigation}
+				onKeyDown={(event) => event.stopPropagation()}
+				onMouseDown={(event) => event.stopPropagation()}
+				onChange={(event) =>
+					updateContent(event.currentTarget.innerHTML)
+				}
+			/>
 		</div>
 	);
 };
