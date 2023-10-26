@@ -57,7 +57,7 @@ const SlideNavigation = () => {
 						tabIndex={-1}
 						className={`min-h-[25%] min-w-full relative ${
 							activeSlide?.id === slide.id
-								? "border-8 border-sky-600"
+								? "border-4 border-sky-600"
 								: "cursor-pointer"
 						}`}
 						onClick={(event) => {
