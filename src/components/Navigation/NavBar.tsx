@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { createSlide, createSlideElement } from "../../store/actions/actions";
 const NavBar = () => {
 	const dispatch = useDispatch();
 	const [activeTab, setActiveTab] = useState<Nullable<string>>("home");
@@ -64,13 +65,13 @@ const NavBar = () => {
 				>
 					<button
 						className="p-1 rounded focus:bg-neutral-600 hover:bg-neutral-500"
-						onClick={() => dispatch({ type: "CREATE_SLIDE" })}
+						onClick={() => dispatch(createSlide())}
 					>
 						New Slide
 					</button>
 					<button
 						className="p-1 rounded focus:bg-neutral-600 hover:bg-neutral-500"
-						onClick={() => dispatch({ type: "CREATE_SLIDE_ELEMENT" })}
+						onClick={() => dispatch(createSlideElement())}
 					>
 						Insert Element
 					</button>

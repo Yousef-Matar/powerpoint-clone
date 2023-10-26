@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as keyboard from "../../../constants/keyboardKeys.constants";
+import { copyElement, deleteSlide, selectSlide } from "../../../store/actions/actions";
 import SingleSlide from "../../Slide/SingleSlide";
 const SlideNavigation = () => {
 	const dispatch = useDispatch();
@@ -13,9 +14,7 @@ const SlideNavigation = () => {
 	const [holdingCTRL, setHoldingCTRL] = useState(false);
 	const handleDeleteSlide = (pressedKey: string) => {
 		if ([keyboard.deleteKey, keyboard.backspaceKey].includes(pressedKey)) {
-			dispatch({
-				type: "DELETE_SLIDE",
-			});
+			dispatch(deleteSlide());
 		}
 	};
 	const handleCopySlide = (pressedKey: string) => {
@@ -23,10 +22,7 @@ const SlideNavigation = () => {
 			setHoldingCTRL(true);
 		}
 		if (holdingCTRL && pressedKey === keyboard.cKey) {
-			dispatch({
-				type: "COPY_ELEMENT",
-				payload: "slide",
-			});
+			dispatch(copyElement('slide'));
 		}
 	};
 	const handleCtrlKeyUp = (pressedKey: string) => {
@@ -63,10 +59,7 @@ const SlideNavigation = () => {
 						onClick={(event) => {
 							event.currentTarget.focus();
 							if (activeSlide?.id !== slide.id)
-								dispatch({
-									type: "SELECT_SLIDE",
-									payload: index,
-								});
+								dispatch(selectSlide(index));
 						}}
 						onKeyDown={(event) => handleCopySlide(event.key)}
 						onKeyUp={(event) => handleCtrlKeyUp(event.key)}

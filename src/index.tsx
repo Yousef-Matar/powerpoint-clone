@@ -9,6 +9,7 @@ import LayoutView from "./components/Layout/LayoutView";
 import NavBar from "./components/Navigation/NavBar";
 // Utilities
 import * as keyboard from "./constants/keyboardKeys.constants";
+import { pasteElement } from "./store/actions/actions";
 const App = () => {
 	const dispatch = useDispatch();
 	const [holdingCTRL, setHoldingCTRL] = useState(false);
@@ -17,9 +18,7 @@ const App = () => {
 			setHoldingCTRL(true);
 		}
 		if (holdingCTRL && pressedKey === keyboard.vKey) {
-			dispatch({
-				type: "PASTE_ELEMENT",
-			});
+			dispatch(pasteElement());
 		}
 	};
 	const handleCtrlKeyUp = (pressedKey: string) => {

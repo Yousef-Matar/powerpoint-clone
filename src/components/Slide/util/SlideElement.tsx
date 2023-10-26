@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as keyboard from "../../../constants/keyboardKeys.constants";
+import {
+	copyElement,
+	selectSlideElement,
+	updateSlideElement,
+} from "../../../store/actions/actions";
 interface ISlideElementProps {
 	slideElement: ISlideElement;
 	navigation: boolean;
@@ -13,10 +18,11 @@ const SlideElement = (props: ISlideElementProps) => {
 	const [holdingCTRL, setHoldingCTRL] = useState(false);
 	const handleSelectSlideElement = () => {
 		if (activeSlide?.selectedElement?.id !== props.slideElement.id) {
-			dispatch({
-				type: "SELECT_SLIDE_ELEMENT",
-				payload: activeSlide?.elements.indexOf(props.slideElement),
-			});
+			dispatch(
+				selectSlideElement(
+					activeSlide?.elements.indexOf(props.slideElement)
+				)
+			);
 		}
 	};
 	// Mouse Events
@@ -83,12 +89,12 @@ const SlideElement = (props: ISlideElementProps) => {
 		document.onmouseup = () => {
 			document.onmouseup = null;
 			document.onmousemove = null;
-			dispatch({
-				type: "UPDATE_SLIDE_ELEMENT",
-				payload: {
+			dispatch(
+				updateSlideElement({
+					...props.slideElement,
 					position: { ...elementPosition },
-				},
-			});
+				})
+			);
 			htmlElement.scrollIntoView({
 				behavior: "smooth",
 				block: "end",
@@ -102,15 +108,10 @@ const SlideElement = (props: ISlideElementProps) => {
 			setHoldingCTRL(true);
 		}
 		if (holdingCTRL && pressedKey === keyboard.cKey) {
-			dispatch({
-				type: "COPY_ELEMENT",
-				payload: "slideElement",
-			});
+			dispatch(copyElement("slideElement"));
 		}
 		if ([keyboard.deleteKey, keyboard.backspaceKey].includes(pressedKey)) {
-			dispatch({
-				type: "DELETE_SLIDE_ELEMENT",
-			});
+			console.log("here");
 		}
 	};
 	const handleCtrlKeyUp = (pressedKey: string) => {
@@ -137,11 +138,7 @@ const SlideElement = (props: ISlideElementProps) => {
 			{...(!props.navigation && {
 				tabIndex: -1,
 				onMouseDown: (event) => handleMouseDown(event),
-				// onBlur: () =>
-				// 	dispatch({
-				// 		type: "SELECT_SLIDE_ELEMENT",
-				// 		payload: -1,
-				// 	}),
+				onBlur: () => dispatch(selectSlideElement(-1)),
 				onClick: handleSelectSlideElement,
 				onKeyDown: (event) => handleKeyDown(event.key),
 				onKeyUp: (event) => handleCtrlKeyUp(event.key),
