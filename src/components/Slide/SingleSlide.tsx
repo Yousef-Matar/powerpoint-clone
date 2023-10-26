@@ -1,4 +1,5 @@
 import React from "react";
+import SlideElement from "./util/SlideElement";
 
 interface ISingleSlideProps {
 	slide: Nullable<ISlide>;
@@ -7,14 +8,20 @@ interface ISingleSlideProps {
 const SingleSlide = (props: ISingleSlideProps) => {
 	return (
 		<div
-			className={`bg-white text-black h-full w-full relative ${
-				props.navigation && "overflow-hidden"
+			className={`bg-white text-black h-full w-full relative aspect-video ${
+				props.navigation && "overflow-hidden select-none"
 			}`}
 			style={{ zoom: props.navigation ? "0.4" : "1" }}
 		>
-			<div className="bg-transparent rounded absolute p-4 z-0">
-				<pre>{JSON.stringify(props.slide, null, 2)}</pre>
-			</div>
+			{props.slide?.elements.map((slideElement) => {
+				return (
+					<SlideElement
+						key={slideElement.id}
+						slideElement={slideElement}
+						navigation={props.navigation}
+					/>
+				);
+			})}
 		</div>
 	);
 };

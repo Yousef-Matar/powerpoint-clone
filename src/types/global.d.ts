@@ -2,8 +2,8 @@ export { };
 declare global {
 	type Nullable<T> = T | null;
 	interface IElementPosition {
-		top: string;
-		left: string;
+		top: number;
+		left: number;
 	}
 	interface IElementSize {
 		width: number;

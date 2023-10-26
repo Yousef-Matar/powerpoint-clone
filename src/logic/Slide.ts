@@ -26,7 +26,7 @@ class Slide implements ISlide {
 			slideElement
 		);
 	}
-	set selectedElement(ISlideElement) {
+	set selectedElement(ISlideElement: Nullable<ISlideElement>) {
 		this._selectedElement = ISlideElement;
 	}
 	get selectedElement(): Nullable<ISlideElement> {

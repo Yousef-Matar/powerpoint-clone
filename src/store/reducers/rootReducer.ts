@@ -9,7 +9,9 @@ interface storeAction {
 		| typeof actionTypes.CREATE_SLIDE_ELEMENT;
 }
 interface selectAction {
-	type: typeof actionTypes.SELECT_SLIDE;
+	type:
+		| typeof actionTypes.SELECT_SLIDE
+		| typeof actionTypes.SELECT_SLIDE_ELEMENT;
 	payload: number;
 }
 
@@ -17,10 +19,14 @@ interface copyAction {
 	type: typeof actionTypes.COPY_ELEMENT;
 	payload: ISlide | ISlideElement;
 }
+interface updateSlideElementAction {
+	type: typeof actionTypes.UPDATE_SLIDE_ELEMENT;
+	payload: ISlideElement;
+}
 
 export const rootReducer = (
 	state = Powerpoint.getInstance(),
-	action: storeAction | selectAction | copyAction
+	action: storeAction | selectAction | copyAction | updateSlideElementAction
 ) => {
 	switch (action.type) {
 		case actionTypes.CREATE_SLIDE: {
@@ -51,6 +57,21 @@ export const rootReducer = (
 		case actionTypes.CREATE_SLIDE_ELEMENT: {
 			let updatedState = cloneDeep(state);
 			updatedState.activeSlide?.addElement();
+			return updatedState;
+		}
+		case actionTypes.SELECT_SLIDE_ELEMENT: {
+			let updatedState = cloneDeep(state);
+			if (updatedState.activeSlide) {
+				updatedState.activeSlide.selectedElement =
+					action.payload !== -1
+						? updatedState.activeSlide?.elements[action.payload]
+						: null;
+			}
+			return updatedState;
+		}
+		case actionTypes.UPDATE_SLIDE_ELEMENT: {
+			let updatedState = cloneDeep(state);
+			updatedState.activeSlide?.updateElement(action.payload);
 			return updatedState;
 		}
 		default: {

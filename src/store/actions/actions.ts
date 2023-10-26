@@ -20,3 +20,11 @@ export const pasteElement = () => ({
 export const addSlideElement = () => ({
 	type: actionTypes.CREATE_SLIDE_ELEMENT,
 });
+export const selectSlideElement = (slideElementIndex: number) => ({
+	type: actionTypes.SELECT_SLIDE_ELEMENT,
+	payload: slideElementIndex,
+});
+export const updateSlideElement = (slideElement: ISlideElement) => ({
+	type: actionTypes.UPDATE_SLIDE_ELEMENT,
+	payload: slideElement,
+});

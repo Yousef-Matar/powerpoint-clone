@@ -6,7 +6,7 @@ const ActiveSlide = () => {
 		(state) => state.activeSlide
 	);
 	return (
-		<div className="min-w-[60%] max-w-[80%] overflow-auto p-10 flex-grow">
+		<div className="min-w-[60%] max-w-[75%] overflow-auto p-10 flex-grow">
 			<SingleSlide slide={activeSlide} navigation={false} />
 		</div>
 	);
