@@ -137,8 +137,9 @@ const SlideElement = (props: ISlideElementProps) => {
 				props.navigation
 					? `preview-slide p-2`
 					: `p-5 border ${
-							props.slideElement.content?.length === 0 &&
-							"border-dashed"
+							props.slideElement.content?.length === 0
+								? "border-dashed"
+								: "border-none"
 					  } cursor-move focus:border-solid focus-within:border-dashed`
 			}`}
 			style={{
