@@ -13,11 +13,14 @@ class Slide implements ISlide {
 		this._elements.push(new SlideElement());
 		this._selectedElement = this._elements[this._elements.length - 1];
 	}
-	removeElement(element: ISlideElement): void {
-		if (element.id === this._selectedElement?.id) {
-			this._selectedElement = null;
+	removeElement(): void {
+		if (this._selectedElement === null) return;
+		if (this._selectedElement.content?.length) {
+			this._selectedElement.content = "";
+			return;
 		}
-		this._elements.splice(this._elements.indexOf(element), 1);
+		this._elements.splice(this._elements.indexOf(this._selectedElement), 1);
+		this._selectedElement = null;
 	}
 	updateElement(slideElement: ISlideElement): void {
 		if (this._selectedElement == null) return;

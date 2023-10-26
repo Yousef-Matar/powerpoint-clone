@@ -52,6 +52,11 @@ export const rootReducer = (
 			}
 			return updatedState;
 		}
+		case actionTypes.DELETE_SLIDE_ELEMENT: {
+			let updatedState = cloneDeep(state);
+			updatedState.activeSlide?.removeElement();
+			return updatedState;
+		}
 		case actionTypes.UPDATE_SLIDE_ELEMENT: {
 			let updatedState = cloneDeep(state);
 			updatedState.activeSlide?.updateElement(action.payload);

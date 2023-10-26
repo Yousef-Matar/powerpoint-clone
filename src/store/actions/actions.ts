@@ -31,6 +31,9 @@ export const selectSlideElement = (
 	type: actionTypes.SELECT_SLIDE_ELEMENT,
 	payload: slideElementIndex ? slideElementIndex : 0,
 });
+export const deleteSlideElement = (): actionInterfaces.storeAction => ({
+	type: actionTypes.DELETE_SLIDE_ELEMENT,
+});
 export const updateSlideElement = (
 	slideElement: ISlideElement | IElementPosition
 ): actionInterfaces.updateSlideElementAction => ({

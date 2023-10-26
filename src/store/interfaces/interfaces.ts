@@ -4,7 +4,8 @@ export interface storeAction {
 		| typeof actionTypes.CREATE_SLIDE
 		| typeof actionTypes.PASTE_ELEMENT
 		| typeof actionTypes.DELETE_SLIDE
-		| typeof actionTypes.CREATE_SLIDE_ELEMENT;
+		| typeof actionTypes.CREATE_SLIDE_ELEMENT
+		| typeof actionTypes.DELETE_SLIDE_ELEMENT;
 }
 export interface selectAction {
 	type:

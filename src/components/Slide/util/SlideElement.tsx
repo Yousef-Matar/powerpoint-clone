@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as keyboard from "../../../constants/keyboardKeys.constants";
 import {
 	copyElement,
+	deleteSlideElement,
 	selectSlideElement,
 	updateSlideElement,
 } from "../../../store/actions/actions";
@@ -111,6 +112,7 @@ const SlideElement = (props: ISlideElementProps) => {
 			dispatch(copyElement("slideElement"));
 		}
 		if ([keyboard.deleteKey, keyboard.backspaceKey].includes(pressedKey)) {
+			dispatch(deleteSlideElement());
 			console.log("here");
 		}
 	};
