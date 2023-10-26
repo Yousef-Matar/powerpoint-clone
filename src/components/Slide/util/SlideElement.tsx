@@ -113,7 +113,6 @@ const SlideElement = (props: ISlideElementProps) => {
 		}
 		if ([keyboard.deleteKey, keyboard.backspaceKey].includes(pressedKey)) {
 			dispatch(deleteSlideElement());
-			console.log("here");
 		}
 	};
 	const handleCtrlKeyUp = (pressedKey: string) => {
