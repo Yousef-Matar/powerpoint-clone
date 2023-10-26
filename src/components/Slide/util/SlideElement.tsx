@@ -1,31 +1,56 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import * as keyboard from "../../../constants/keyboardKeys.constants";
 interface ISlideElementProps {
 	slideElement: ISlideElement;
 	navigation: boolean;
 }
 const SlideElement = (props: ISlideElementProps) => {
+	const dispatch = useDispatch();
 	const activeSlide = useSelector<IPowerpoint, IPowerpoint["activeSlide"]>(
 		(state) => state.activeSlide
 	);
-	const dispatch = useDispatch();
+	const TEST = useSelector<IPowerpoint, IPowerpoint>(
+		(state) => state
+	);
+	const [holdingCTRL, setHoldingCTRL] = useState(false);
+	const handleSelectSlideElement = () => {
+		if (activeSlide?.selectedElement?.id !== props.slideElement.id) {
+			dispatch({
+				type: "SELECT_SLIDE_ELEMENT",
+				payload: activeSlide?.elements.indexOf(props.slideElement),
+			});
+		}
+	};
+	// Mouse Events
 	const handleMouseDown = (
 		event: React.MouseEvent<HTMLDivElement, MouseEvent>
 	) => {
 		var htmlElement = event.currentTarget;
+		var singleSlideHtmlElement = htmlElement.parentElement;
 		var clickPositionX = event.clientX;
 		var clickPositionY = event.clientY;
-		var elementPosition = {
-			top: htmlElement.offsetTop - (clickPositionY - event.clientY),
-			left: htmlElement.offsetLeft - (clickPositionX - event.clientX),
-		};
-		handleMouseUp(htmlElement, elementPosition);
-		handleMouseMove(
-			htmlElement,
-			elementPosition,
-			clickPositionX,
-			clickPositionY
-		);
+		if (singleSlideHtmlElement) {
+			var elementPosition = {
+				top:
+					((htmlElement.offsetTop -
+						(clickPositionY - event.clientY)) /
+						singleSlideHtmlElement.clientHeight) *
+					100,
+				left:
+					((htmlElement.offsetLeft -
+						(clickPositionX - event.clientX)) /
+						singleSlideHtmlElement.clientWidth) *
+					100,
+			};
+			handleMouseMove(
+				htmlElement,
+				elementPosition,
+				clickPositionX,
+				clickPositionY
+			);
+			handleMouseUp(htmlElement, elementPosition);
+		}
 	};
 	const handleMouseMove = (
 		htmlElement: HTMLDivElement,
@@ -61,14 +86,12 @@ const SlideElement = (props: ISlideElementProps) => {
 		document.onmouseup = () => {
 			document.onmouseup = null;
 			document.onmousemove = null;
-
 			dispatch({
 				type: "UPDATE_SLIDE_ELEMENT",
 				payload: {
 					position: { ...elementPosition },
 				},
 			});
-
 			htmlElement.scrollIntoView({
 				behavior: "smooth",
 				block: "end",
@@ -76,12 +99,26 @@ const SlideElement = (props: ISlideElementProps) => {
 			});
 		};
 	};
-	const handleSelectSlideElement = () => {
-		if (activeSlide?.selectedElement?.id !== props.slideElement.id) {
+	// Keyboard Events
+	const handleKeyDown = (pressedKey: string) => {
+		if (pressedKey === keyboard.ctrlKey) {
+			setHoldingCTRL(true);
+		}
+		if (holdingCTRL && pressedKey === keyboard.cKey) {
 			dispatch({
-				type: "SELECT_SLIDE_ELEMENT",
-				payload: activeSlide?.elements.indexOf(props.slideElement),
+				type: "COPY_ELEMENT",
+				payload: "slideElement",
 			});
+		}
+		if ([keyboard.deleteKey, keyboard.backspaceKey].includes(pressedKey)) {
+			dispatch({
+				type: "DELETE_SLIDE_ELEMENT",
+			});
+		}
+	};
+	const handleCtrlKeyUp = (pressedKey: string) => {
+		if (pressedKey === keyboard.ctrlKey) {
+			setHoldingCTRL(false);
 		}
 	};
 	return (
@@ -107,9 +144,11 @@ const SlideElement = (props: ISlideElementProps) => {
 						payload: -1,
 					}),
 				onClick: handleSelectSlideElement,
+				onKeyDown: (event) => handleKeyDown(event.key),
+				onKeyUp: (event) => handleCtrlKeyUp(event.key),
 			})}
 		>
-			<pre>{JSON.stringify(activeSlide, null, 2)}</pre>
+			<pre>{JSON.stringify(TEST, null, 2)}</pre>
 		</div>
 	);
 };
