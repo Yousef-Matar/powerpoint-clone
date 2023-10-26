@@ -11,7 +11,6 @@ const SingleSlide = (props: ISingleSlideProps) => {
 			className={`bg-white text-black h-full w-full relative aspect-video ${
 				props.navigation && "overflow-hidden select-none"
 			}`}
-			style={{ zoom: props.navigation ? "0.4" : "1" }}
 		>
 			{props.slide?.elements.map((slideElement) => {
 				return (

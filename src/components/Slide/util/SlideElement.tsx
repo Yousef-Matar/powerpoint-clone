@@ -120,11 +120,13 @@ const SlideElement = (props: ISlideElementProps) => {
 	};
 	return (
 		<div
-			className={`bg-transparent rounded absolute p-5 ${
-				!props.navigation &&
-				`border ${
-					props.slideElement.content?.length === 0 && "border-dashed"
-				} cursor-move focus:border-solid focus-within:border-dashed`
+			className={`bg-transparent rounded absolute ${
+				props.navigation
+					? `preview-slide p-1`
+					: `p-5 border ${
+							props.slideElement.content?.length === 0 &&
+							"border-dashed"
+					  } cursor-move focus:border-solid focus-within:border-dashed`
 			}`}
 			style={{
 				width: props.slideElement.size?.width + "%",
@@ -135,11 +137,11 @@ const SlideElement = (props: ISlideElementProps) => {
 			{...(!props.navigation && {
 				tabIndex: -1,
 				onMouseDown: (event) => handleMouseDown(event),
-				onBlur: () =>
-					dispatch({
-						type: "SELECT_SLIDE_ELEMENT",
-						payload: -1,
-					}),
+				// onBlur: () =>
+				// 	dispatch({
+				// 		type: "SELECT_SLIDE_ELEMENT",
+				// 		payload: -1,
+				// 	}),
 				onClick: handleSelectSlideElement,
 				onKeyDown: (event) => handleKeyDown(event.key),
 				onKeyUp: (event) => handleCtrlKeyUp(event.key),
