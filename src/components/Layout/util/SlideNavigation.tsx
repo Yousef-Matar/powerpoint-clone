@@ -4,8 +4,12 @@ import * as keyboard from "../../../constants/keyboardKeys.constants";
 import SingleSlide from "../../Slide/SingleSlide";
 const SlideNavigation = () => {
 	const dispatch = useDispatch();
-	const slides = useSelector<IPowerpoint, IPowerpoint['slides']>((state) => state.slides);
-	const activeSlide = useSelector<IPowerpoint, IPowerpoint['activeSlide']>((state) => state.activeSlide);
+	const slides = useSelector<IPowerpoint, IPowerpoint["slides"]>(
+		(state) => state.slides
+	);
+	const activeSlide = useSelector<IPowerpoint, IPowerpoint["activeSlide"]>(
+		(state) => state.activeSlide
+	);
 	const [holdingCTRL, setHoldingCTRL] = useState(false);
 	const handleDeleteSlide = (pressedKey: string) => {
 		if ([keyboard.deleteKey, keyboard.backspaceKey].includes(pressedKey)) {
@@ -31,13 +35,11 @@ const SlideNavigation = () => {
 		}
 	};
 	useEffect(() => {
-		document
-			.getElementById(`slide-${activeSlide?.id}`)
-			?.scrollIntoView({
-				behavior: "smooth",
-				block: "end",
-				inline: "nearest",
-			});
+		document.getElementById(`slide-${activeSlide?.id}`)?.scrollIntoView({
+			behavior: "smooth",
+			block: "end",
+			inline: "nearest",
+		});
 	}, [activeSlide]);
 
 	return (
@@ -59,7 +61,7 @@ const SlideNavigation = () => {
 								: "cursor-pointer"
 						}`}
 						onClick={(event) => {
-							event.currentTarget.parentElement?.focus();
+							event.currentTarget.focus();
 							if (activeSlide?.id !== slide.id)
 								dispatch({
 									type: "SELECT_SLIDE",
