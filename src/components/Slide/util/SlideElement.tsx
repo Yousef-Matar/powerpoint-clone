@@ -245,6 +245,7 @@ const SlideElement = (props: ISlideElementProps) => {
 				top: props.slideElement.position?.top + "%",
 				left: props.slideElement.position?.left + "%",
 			}}
+			draggable={false}
 			{...(!props.navigation && {
 				tabIndex: -1,
 				onMouseDown: (event) => handleMouseDown(event),
@@ -294,6 +295,7 @@ const SlideElement = (props: ISlideElementProps) => {
 				className={`focus:outline-none w-full ${
 					props.navigation ? "cursor-pointer" : "cursor-text"
 				}`}
+				draggable={false}
 				html={props.slideElement.content}
 				disabled={props.navigation}
 				onKeyDown={(event) => event.stopPropagation()}
