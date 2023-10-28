@@ -20,6 +20,14 @@ code {
 	-webkit-transform: scale(0.5);
 	-webkit-transform-origin: 0 0;
 }
+/* Resizing Slide Element */
+.resize-indicator {
+	display: none;
+}
+.show-resize:focus .resize-indicator,
+.show-resize:focus-within .resize-indicator {
+	display: block;
+}
 /* Scrollbar */
 
 /* Width of scrollbar for X and Y axis */
