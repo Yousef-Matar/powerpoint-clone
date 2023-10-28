@@ -9,6 +9,7 @@ import {
 	updateSlideElement,
 } from "../../../store/actions/actions";
 import { useDebounce } from "../../../util/Debounce";
+import CustomTypeIndicators from "./util/CustomTypeIndicators";
 import ResizeIndicators from "./util/ResizeIndicators";
 interface ISlideElementProps {
 	slideElement: ISlideElement;
@@ -292,6 +293,7 @@ const SlideElement = (props: ISlideElementProps) => {
 					updateContent(event.currentTarget.innerHTML)
 				}
 			/>
+			<CustomTypeIndicators />
 		</div>
 	);
 };
