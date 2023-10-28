@@ -220,7 +220,7 @@ const SlideElement = (props: ISlideElementProps) => {
 	}, 300);
 	return (
 		<div
-			className={`bg-transparent rounded absolute ${
+			className={`bg-transparent rounded absolute flex items-center ${
 				props.navigation
 					? `preview-slide p-2`
 					: `p-5 border show-resize ${
@@ -281,8 +281,8 @@ const SlideElement = (props: ISlideElementProps) => {
 				</>
 			)}
 			<ContentEditable
-				className={`focus:outline-none ${
-					props.navigation ? "p-1 cursor-pointer" : "p-4 cursor-text"
+				className={`focus:outline-none w-full ${
+					props.navigation ? "cursor-pointer" : "cursor-text"
 				}`}
 				html={props.slideElement.content}
 				disabled={props.navigation}
