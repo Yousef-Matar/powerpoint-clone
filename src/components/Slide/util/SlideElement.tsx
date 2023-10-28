@@ -101,6 +101,8 @@ const SlideElement = (props: ISlideElementProps) => {
 		document.onmouseup = () => {
 			document.onmouseup = null;
 			document.onmousemove = null;
+			document.body.classList.remove("cursor-nwse-resize");
+			document.body.classList.remove("cursor-nesw-resize");
 			dispatch(
 				updateSlideElement({
 					...props.slideElement,
@@ -131,6 +133,14 @@ const SlideElement = (props: ISlideElementProps) => {
 		var clickPositionY = event.clientY;
 		var newElementPosition = { ...props.slideElement.position };
 		var newElementSize = { ...props.slideElement.size };
+		if (
+			selectedResizer.classList.contains("top-left") ||
+			selectedResizer.classList.contains("bottom-right")
+		) {
+			document.body.className = "cursor-nwse-resize";
+		} else {
+			document.body.className = "cursor-nesw-resize";
+		}
 		document.onmousemove = (event) => {
 			if (slideElementHTML && singleSlideHtmlElement) {
 				var newValueX =
