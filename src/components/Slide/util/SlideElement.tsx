@@ -103,6 +103,8 @@ const SlideElement = (props: ISlideElementProps) => {
 			document.onmousemove = null;
 			document.body.classList.remove("cursor-nwse-resize");
 			document.body.classList.remove("cursor-nesw-resize");
+			document.body.classList.remove("cursor-ew-resize");
+			document.body.classList.remove("cursor-ns-resize");
 			dispatch(
 				updateSlideElement({
 					...props.slideElement,
@@ -138,8 +140,18 @@ const SlideElement = (props: ISlideElementProps) => {
 			selectedResizer.classList.contains("bottom-right")
 		) {
 			document.body.className = "cursor-nwse-resize";
-		} else {
+		} else if (
+			selectedResizer.classList.contains("top-right") ||
+			selectedResizer.classList.contains("bottom-left")
+		) {
 			document.body.className = "cursor-nesw-resize";
+		} else if (
+			selectedResizer.classList.contains("middle-right") ||
+			selectedResizer.classList.contains("middle-left")
+		) {
+			document.body.className = "cursor-ew-resize";
+		} else {
+			document.body.className = "cursor-ns-resize";
 		}
 		document.onmousemove = (event) => {
 			if (slideElementHTML && singleSlideHtmlElement) {
@@ -154,14 +166,16 @@ const SlideElement = (props: ISlideElementProps) => {
 				// Right Top & Bottom Resizers Width Calculation
 				if (
 					selectedResizer.classList.contains("bottom-right") ||
-					selectedResizer.classList.contains("top-right")
+					selectedResizer.classList.contains("top-right") ||
+					selectedResizer.classList.contains("middle-right")
 				) {
 					width = props.slideElement.size.width + newValueX;
 				}
 				// Left Top & Bottom Resizer Width & Left Calculation
 				if (
 					selectedResizer.classList.contains("bottom-left") ||
-					selectedResizer.classList.contains("top-left")
+					selectedResizer.classList.contains("top-left") ||
+					selectedResizer.classList.contains("middle-left")
 				) {
 					width = props.slideElement.size.width - newValueX;
 					left = props.slideElement.position.left + newValueX;
@@ -169,14 +183,16 @@ const SlideElement = (props: ISlideElementProps) => {
 				// Bottom Right & Left Resizers Height Calculation
 				if (
 					selectedResizer.classList.contains("bottom-right") ||
-					selectedResizer.classList.contains("bottom-left")
+					selectedResizer.classList.contains("bottom-left") ||
+					selectedResizer.classList.contains("bottom-middle")
 				) {
 					height = props.slideElement.size.height + newValueY;
 				}
 				// Top Right & Left Resizer Height & Top Calculation
 				if (
 					selectedResizer.classList.contains("top-right") ||
-					selectedResizer.classList.contains("top-left")
+					selectedResizer.classList.contains("top-left") ||
+					selectedResizer.classList.contains("top-middle")
 				) {
 					height = props.slideElement.size.height - newValueY;
 					top = props.slideElement.position.top + newValueY;
@@ -269,6 +285,20 @@ const SlideElement = (props: ISlideElementProps) => {
 						}}
 					/>
 					<div
+						className="resize-indicator middle-left bg-neutral-800 absolute z-1 w-2 h-2 rounded-full cursor-ew-resize -left-1 top-[calc(50%-4px)]"
+						onMouseDown={(event) => {
+							event.stopPropagation();
+							handleResize(event);
+						}}
+					/>
+					<div
+						className="resize-indicator top-middle bg-neutral-800 absolute z-1 w-2 h-2 rounded-full cursor-ns-resize left-[calc(50%-4px)] -top-1"
+						onMouseDown={(event) => {
+							event.stopPropagation();
+							handleResize(event);
+						}}
+					/>
+					<div
 						className="resize-indicator bottom-left bg-neutral-800 absolute z-1 w-2 h-2 rounded-full cursor-nesw-resize -left-1 -bottom-1"
 						onMouseDown={(event) => {
 							event.stopPropagation();
@@ -277,6 +307,20 @@ const SlideElement = (props: ISlideElementProps) => {
 					/>
 					<div
 						className="resize-indicator top-right bg-neutral-800 absolute z-1 w-2 h-2 rounded-full cursor-nesw-resize -right-1 -top-1"
+						onMouseDown={(event) => {
+							event.stopPropagation();
+							handleResize(event);
+						}}
+					/>
+					<div
+						className="resize-indicator bottom-middle bg-neutral-800 absolute z-1 w-2 h-2 rounded-full cursor-ns-resize left-[calc(50%-4px)] -bottom-1"
+						onMouseDown={(event) => {
+							event.stopPropagation();
+							handleResize(event);
+						}}
+					/>
+					<div
+						className="resize-indicator middle-right bg-neutral-800 absolute z-1 w-2 h-2 rounded-full cursor-ew-resize -right-1 top-[calc(50%-4px)]"
 						onMouseDown={(event) => {
 							event.stopPropagation();
 							handleResize(event);
