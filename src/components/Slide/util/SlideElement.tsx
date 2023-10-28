@@ -220,7 +220,7 @@ const SlideElement = (props: ISlideElementProps) => {
 	}, 300);
 	return (
 		<div
-			className={`bg-red-800 rounded absolute ${
+			className={`bg-transparent rounded absolute ${
 				props.navigation
 					? `preview-slide p-2`
 					: `p-5 border show-resize ${
@@ -280,12 +280,6 @@ const SlideElement = (props: ISlideElementProps) => {
 					/>
 				</>
 			)}
-			<div className="text-blue-600">
-				size:{JSON.stringify(props.slideElement.size)}
-			</div>
-			<div className="text-blue-600">
-				position:{JSON.stringify(props.slideElement.position)}
-			</div>
 			<ContentEditable
 				className={`focus:outline-none ${
 					props.navigation ? "p-1 cursor-pointer" : "p-4 cursor-text"
