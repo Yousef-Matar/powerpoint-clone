@@ -22,8 +22,11 @@ export const copyElement = (
 export const pasteElement = (): actionInterfaces.storeAction => ({
 	type: actionTypes.PASTE_ELEMENT,
 });
-export const createSlideElement = (): actionInterfaces.storeAction => ({
+export const createSlideElement = (
+	slideElement?: Partial<ISlideElement>
+): actionInterfaces.createSlideElementAction => ({
 	type: actionTypes.CREATE_SLIDE_ELEMENT,
+	payload: slideElement,
 });
 export const selectSlideElement = (
 	slideElementIndex: number | undefined

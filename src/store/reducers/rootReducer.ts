@@ -10,6 +10,7 @@ export const rootReducer = (
 		| actionInterfaces.selectAction
 		| actionInterfaces.copyAction
 		| actionInterfaces.updateSlideElementAction
+		| actionInterfaces.createSlideElementAction
 ) => {
 	switch (action.type) {
 		case actionTypes.CREATE_SLIDE: {
@@ -39,7 +40,7 @@ export const rootReducer = (
 		}
 		case actionTypes.CREATE_SLIDE_ELEMENT: {
 			let updatedState = cloneDeep(state);
-			updatedState.activeSlide?.addElement();
+			updatedState.activeSlide?.addElement(action.payload);
 			return updatedState;
 		}
 		case actionTypes.SELECT_SLIDE_ELEMENT: {

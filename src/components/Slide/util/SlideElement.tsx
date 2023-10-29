@@ -250,22 +250,35 @@ const SlideElement = (props: ISlideElementProps) => {
 		<div
 			className={`bg-transparent rounded absolute flex items-center ${
 				props.navigation
-					? `preview-slide p-2`
-					: `border show-resize ${
-							props.slideElement.type === "custom"
-								? "p-10"
-								: "p-5"
+					? "preview-slide p-2"
+					: `show-resize cursor-move ${
+							props.slideElement.type !== "image" &&
+							"p-5 border focus:border-solid focus-within:border-dashed"
 					  } ${
 							props.slideElement.content?.length === 0
 								? "border-dashed"
 								: "border-none"
-					  } cursor-move focus:border-solid focus-within:border-dashed`
+					  }`
 			}`}
 			style={{
 				width: props.slideElement.size?.width + "%",
 				height: props.slideElement.size?.height + "%",
 				top: props.slideElement.position?.top + "%",
 				left: props.slideElement.position?.left + "%",
+				backgroundSize:
+					props.slideElement.type === "image"
+						? "100% 100%"
+						: undefined,
+				backgroundPosition:
+					props.slideElement.type === "image" ? "center%" : undefined,
+				backgroundRepeat:
+					props.slideElement.type === "image"
+						? "no-repeat"
+						: undefined,
+				backgroundImage:
+					props.slideElement.type === "image"
+						? `url(${props.slideElement.content})`
+						: undefined,
 			}}
 			draggable={false}
 			{...(!props.navigation && {
@@ -295,9 +308,9 @@ const SlideElement = (props: ISlideElementProps) => {
 					disabled={props.navigation}
 					onKeyDown={(event) => event.stopPropagation()}
 					onMouseDown={(event) => event.stopPropagation()}
-					onChange={(event) => {
-						updateContent(event.currentTarget.innerHTML);
-					}}
+					onChange={(event) =>
+						updateContent(event.currentTarget.innerHTML)
+					}
 				/>
 			)}
 			{!props.navigation &&

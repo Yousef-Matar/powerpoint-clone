@@ -4,7 +4,6 @@ export interface storeAction {
 		| typeof actionTypes.CREATE_SLIDE
 		| typeof actionTypes.PASTE_ELEMENT
 		| typeof actionTypes.DELETE_SLIDE
-		| typeof actionTypes.CREATE_SLIDE_ELEMENT
 		| typeof actionTypes.DELETE_SLIDE_ELEMENT;
 }
 export interface selectAction {
@@ -21,4 +20,8 @@ export interface copyAction {
 export interface updateSlideElementAction {
 	type: typeof actionTypes.UPDATE_SLIDE_ELEMENT;
 	payload: ISlideElement | IElementPosition;
+}
+export interface createSlideElementAction {
+	type: typeof actionTypes.CREATE_SLIDE_ELEMENT;
+	payload?: Partial<ISlideElement>;
 }

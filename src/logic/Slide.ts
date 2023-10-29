@@ -9,13 +9,16 @@ class Slide implements ISlide {
 			Date.now().toString(36) + Math.random().toString(36).substr(2);
 		this._elements = slide?.elements || [];
 	}
-	addElement(): void {
-		this._elements.push(new SlideElement());
+	addElement(slideElement?: Partial<ISlideElement>): void {
+		this._elements.push(new SlideElement(slideElement));
 		this._selectedElement = this._elements[this._elements.length - 1];
 	}
 	removeElement(): void {
 		if (this._selectedElement === null) return;
-		if (this._selectedElement.content?.length) {
+		if (
+			this._selectedElement.content?.length &&
+			this._selectedElement.type !== "image"
+		) {
 			this._selectedElement.content = "";
 			return;
 		}
