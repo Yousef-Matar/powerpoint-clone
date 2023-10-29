@@ -38,19 +38,26 @@ class Powerpoint implements IPowerpoint {
 				new Slide(cloneDeep(this._copiedElement as ISlide))
 			);
 			this._activeSlide = this._slides[this._slides.length - 1];
-		} else if ((this._copiedElement as ISlideElement).content != null) {
+		} else if (
+			(this._copiedElement as ISlideElement).content != null &&
+			this._activeSlide?.selectedElement == null
+		) {
 			this._activeSlide?.elements.push(
 				new SlideElement({
 					...cloneDeep(this._copiedElement as ISlideElement),
+					type:
+						(this._copiedElement as ISlideElement).type === "custom"
+							? "text"
+							: (this._copiedElement as ISlideElement).type,
 					position: {
 						top:
 							(this._copiedElement as ISlideElement).position
-								?.top ||
-							5 + this._activeSlide?.elements.length * 0.2,
+								?.top + this._activeSlide?.elements.length * 0.5 ||
+							5 + this._activeSlide?.elements.length * 0.5,
 						left:
 							(this._copiedElement as ISlideElement).position
-								?.left ||
-							5 + this._activeSlide?.elements.length * 0.2,
+								?.left + this._activeSlide?.elements.length * 0.5 ||
+							5 + this._activeSlide?.elements.length * 0.5,
 					},
 				})
 			);

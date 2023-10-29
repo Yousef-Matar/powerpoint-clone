@@ -28,6 +28,7 @@ declare global {
 	interface ISlideElement {
 		id: Readonly<string>;
 		content: string;
+		type: string;
 		position: IElementPosition;
 		size: IElementSize;
 	}

@@ -251,7 +251,11 @@ const SlideElement = (props: ISlideElementProps) => {
 			className={`bg-transparent rounded absolute flex items-center ${
 				props.navigation
 					? `preview-slide p-2`
-					: `p-5 border show-resize ${
+					: `border show-resize ${
+							props.slideElement.type === "custom"
+								? "p-10"
+								: "p-5"
+					  } ${
 							props.slideElement.content?.length === 0
 								? "border-dashed"
 								: "border-none"
@@ -280,20 +284,29 @@ const SlideElement = (props: ISlideElementProps) => {
 			{!props.navigation && (
 				<ResizeIndicators resizeFunction={handleResize} />
 			)}
-			<ContentEditable
-				className={`focus:outline-none w-full ${
-					props.navigation ? "cursor-pointer" : "cursor-text"
-				}`}
-				draggable={false}
-				html={props.slideElement.content}
-				disabled={props.navigation}
-				onKeyDown={(event) => event.stopPropagation()}
-				onMouseDown={(event) => event.stopPropagation()}
-				onChange={(event) =>
-					updateContent(event.currentTarget.innerHTML)
-				}
-			/>
-			<CustomTypeIndicators />
+			{(props.slideElement.type === "text" ||
+				props.slideElement.type === "custom") && (
+				<ContentEditable
+					className={`focus:outline-none w-full ${
+						props.navigation ? "cursor-pointer" : "cursor-text"
+					}`}
+					draggable={false}
+					html={props.slideElement.content}
+					disabled={props.navigation}
+					onKeyDown={(event) => event.stopPropagation()}
+					onMouseDown={(event) => event.stopPropagation()}
+					onChange={(event) => {
+						updateContent(event.currentTarget.innerHTML);
+					}}
+				/>
+			)}
+			{!props.navigation &&
+				props.slideElement.type === "custom" &&
+				props.slideElement.content.length === 0 && (
+					<CustomTypeIndicators
+						slideElementID={props.slideElement.id}
+					/>
+				)}
 		</div>
 	);
 };
