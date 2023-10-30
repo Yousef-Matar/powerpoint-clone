@@ -1,3 +1,4 @@
+import { slideElementType } from "../constants/SlideElementTypes.enum";
 import SlideElement from "./SlideElement";
 
 class Slide implements ISlide {
@@ -17,7 +18,7 @@ class Slide implements ISlide {
 		if (this._selectedElement === null) return;
 		if (
 			this._selectedElement.content?.length &&
-			this._selectedElement.type !== "image"
+			this._selectedElement.type !== slideElementType.image
 		) {
 			this._selectedElement.content = "";
 			return;

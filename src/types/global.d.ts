@@ -1,3 +1,5 @@
+import { slideElementType } from "../constants/SlideElementTypes.enum";
+
 export { };
 declare global {
 	type Nullable<T> = T | null;
@@ -28,7 +30,7 @@ declare global {
 	interface ISlideElement {
 		id: Readonly<string>;
 		content: string;
-		type: string;
+		type: slideElementType;
 		position: IElementPosition;
 		size: IElementSize;
 	}

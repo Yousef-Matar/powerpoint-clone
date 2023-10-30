@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ContentEditable from "react-contenteditable";
 import { useDispatch, useSelector } from "react-redux";
+import { slideElementType } from "../../../constants/SlideElementTypes.enum";
 import * as keyboard from "../../../constants/keyboardKeys.constants";
 import {
 	copyElement,
@@ -254,7 +255,7 @@ const SlideElement = (props: ISlideElementProps) => {
 				props.navigation
 					? "preview-slide p-2"
 					: `show-resize cursor-move ${
-							props.slideElement.type !== "image" &&
+							props.slideElement.type !== slideElementType.image &&
 							"p-5 border focus:border-solid focus-within:border-dashed"
 					  } ${
 							props.slideElement.content?.length === 0
@@ -268,17 +269,17 @@ const SlideElement = (props: ISlideElementProps) => {
 				top: props.slideElement.position?.top + "%",
 				left: props.slideElement.position?.left + "%",
 				backgroundSize:
-					props.slideElement.type === "image"
+					props.slideElement.type === slideElementType.image
 						? "100% 100%"
 						: undefined,
 				backgroundPosition:
-					props.slideElement.type === "image" ? "center%" : undefined,
+					props.slideElement.type === slideElementType.image ? "center" : undefined,
 				backgroundRepeat:
-					props.slideElement.type === "image"
+					props.slideElement.type === slideElementType.image
 						? "no-repeat"
 						: undefined,
 				backgroundImage:
-					props.slideElement.type === "image"
+					props.slideElement.type === slideElementType.image
 						? `url(${props.slideElement.content})`
 						: undefined,
 			}}
@@ -299,7 +300,7 @@ const SlideElement = (props: ISlideElementProps) => {
 			{!props.navigation && (
 				<ResizeIndicators resizeFunction={handleResize} />
 			)}
-			{(props.slideElement.type === "text") && (
+			{(props.slideElement.type === slideElementType.text) && (
 				<ContentEditable
 					className={`focus:outline-none w-full ${
 						props.navigation ? "cursor-pointer" : "cursor-text"

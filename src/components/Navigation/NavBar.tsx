@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
+import { slideElementType } from "../../constants/SlideElementTypes.enum";
 import { createSlide, createSlideElement } from "../../store/actions/actions";
 const NavBar = () => {
 	const dispatch = useDispatch();
@@ -28,7 +29,7 @@ const NavBar = () => {
 		if (imageUploaderRef.current?.files) {
 			dispatch(
 				createSlideElement({
-					type: "image",
+					type: slideElementType.image,
 					content: URL.createObjectURL(
 						imageUploaderRef.current.files?.[0]
 					),
