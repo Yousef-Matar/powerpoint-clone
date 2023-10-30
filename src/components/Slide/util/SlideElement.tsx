@@ -292,9 +292,7 @@ const SlideElement = (props: ISlideElementProps) => {
 						dispatch(selectSlideElement(-1));
 					}
 				},
-				onClick: () => {
-					handleSelectSlideElement();
-				},
+				onClick: handleSelectSlideElement,
 				onKeyDown: (event) => handleKeyDown(event.key),
 				onKeyUp: (event) => handleCtrlKeyUp(event.key),
 			})}
