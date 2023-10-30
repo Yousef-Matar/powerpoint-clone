@@ -9,7 +9,6 @@ import {
 	updateSlideElement,
 } from "../../../store/actions/actions";
 import { useDebounce } from "../../../util/Debounce";
-import CustomTypeIndicators from "./util/CustomTypeIndicators";
 import ResizeIndicators from "./util/ResizeIndicators";
 interface ISlideElementProps {
 	slideElement: ISlideElement;
@@ -300,8 +299,7 @@ const SlideElement = (props: ISlideElementProps) => {
 			{!props.navigation && (
 				<ResizeIndicators resizeFunction={handleResize} />
 			)}
-			{(props.slideElement.type === "text" ||
-				props.slideElement.type === "custom") && (
+			{(props.slideElement.type === "text") && (
 				<ContentEditable
 					className={`focus:outline-none w-full ${
 						props.navigation ? "cursor-pointer" : "cursor-text"
@@ -316,13 +314,6 @@ const SlideElement = (props: ISlideElementProps) => {
 					}
 				/>
 			)}
-			{!props.navigation &&
-				props.slideElement.type === "custom" &&
-				props.slideElement.content.length === 0 && (
-					<CustomTypeIndicators
-						slideElementID={props.slideElement.id}
-					/>
-				)}
 		</div>
 	);
 };

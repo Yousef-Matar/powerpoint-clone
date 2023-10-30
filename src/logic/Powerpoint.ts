@@ -42,10 +42,6 @@ class Powerpoint implements IPowerpoint {
 			this._activeSlide?.elements.push(
 				new SlideElement({
 					...cloneDeep(this._copiedElement as ISlideElement),
-					type:
-						(this._copiedElement as ISlideElement).type === "custom"
-							? "text"
-							: (this._copiedElement as ISlideElement).type,
 					position: {
 						top:
 							(this._copiedElement as ISlideElement).position
