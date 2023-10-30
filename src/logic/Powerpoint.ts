@@ -53,6 +53,7 @@ class Powerpoint implements IPowerpoint {
 								?.left +
 								this._activeSlide?.elements.length * 0.5 ||
 							5 + this._activeSlide?.elements.length * 0.5,
+						zIndex: 1,
 					},
 				})
 			);

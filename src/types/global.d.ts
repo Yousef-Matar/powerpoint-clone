@@ -6,6 +6,7 @@ declare global {
 	interface IElementPosition {
 		top: number;
 		left: number;
+		zIndex: number;
 	}
 	interface IElementSize {
 		width: number;

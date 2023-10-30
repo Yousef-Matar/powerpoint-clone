@@ -55,6 +55,7 @@ const SlideElement = (props: ISlideElementProps) => {
 						(clickPositionX - event.clientX)) /
 						singleSlideHtmlElement.clientWidth) *
 					100,
+				zIndex: props.slideElement.position.zIndex,
 			};
 			handleMouseMove(
 				htmlElement,
@@ -270,6 +271,7 @@ const SlideElement = (props: ISlideElementProps) => {
 				height: props.slideElement.size?.height + "%",
 				top: props.slideElement.position?.top + "%",
 				left: props.slideElement.position?.left + "%",
+				zIndex: props.slideElement.position.zIndex,
 				backgroundSize:
 					props.slideElement.type === slideElementType.image
 						? "100% 100%"
@@ -302,7 +304,10 @@ const SlideElement = (props: ISlideElementProps) => {
 			})}
 		>
 			{!props.navigation && (
-				<ResizeIndicators resizeFunction={handleResize} />
+				<ResizeIndicators
+					zIndex={props.slideElement.position.zIndex}
+					resizeFunction={handleResize}
+				/>
 			)}
 			{props.slideElement.type === slideElementType.text && (
 				<ContentEditable
