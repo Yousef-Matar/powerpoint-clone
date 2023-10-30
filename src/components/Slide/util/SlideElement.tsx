@@ -311,6 +311,7 @@ const SlideElement = (props: ISlideElementProps) => {
 			)}
 			{props.slideElement.type === slideElementType.text && (
 				<ContentEditable
+					tagName="pre"
 					className={`focus:outline-none w-full ${
 						props.navigation ? "cursor-pointer" : "cursor-text"
 					}`}
@@ -320,7 +321,7 @@ const SlideElement = (props: ISlideElementProps) => {
 					onKeyDown={(event) => event.stopPropagation()}
 					onMouseDown={(event) => event.stopPropagation()}
 					onChange={(event) =>
-						updateContentDebounce(event.currentTarget.innerHTML)
+						updateContentDebounce(event.target.value)
 					}
 				/>
 			)}

@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { slideElementType } from "../../constants/SlideElementTypes.enum";
 import { createSlide, createSlideElement } from "../../store/actions/actions";
+import HomeSection from "./util/HomeSection";
 const NavBar = () => {
 	const dispatch = useDispatch();
 	const imageUploaderRef = useRef<HTMLInputElement | null>(null);
@@ -78,12 +79,7 @@ const NavBar = () => {
 					className="gap-3"
 					style={{ display: activeTab === "home" ? "flex" : "none" }}
 				>
-					<button
-						className="p-1 rounded focus:bg-neutral-600 hover:bg-neutral-500"
-						onClick={(event) => console.log(event)}
-					>
-						Home
-					</button>
+					<HomeSection />
 				</div>
 				<div
 					className="gap-3"
