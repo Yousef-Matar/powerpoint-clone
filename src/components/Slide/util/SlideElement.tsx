@@ -23,6 +23,7 @@ const SlideElement = (props: ISlideElementProps) => {
 		(state) => state.activeSlide
 	);
 	const [holdingCTRL, setHoldingCTRL] = useState(false);
+	const [resizing, setResizing] = useState(props.navigation);
 	const handleSelectSlideElement = () => {
 		if (activeSlide?.selectedElement?.id !== props.slideElement.id) {
 			dispatch(
@@ -101,6 +102,7 @@ const SlideElement = (props: ISlideElementProps) => {
 		elementSize: IElementSize
 	) => {
 		document.onmouseup = () => {
+			setResizing(false);
 			document.onmouseup = null;
 			document.onmousemove = null;
 			document.body.classList.remove("cursor-nwse-resize");
@@ -126,6 +128,7 @@ const SlideElement = (props: ISlideElementProps) => {
 	const handleResize = (
 		event: React.MouseEvent<HTMLDivElement, MouseEvent>
 	) => {
+		setResizing(true);
 		// Calculation Values
 		var { height, width } = props.slideElement.size;
 		var { top, left } = props.slideElement.position;
@@ -289,7 +292,9 @@ const SlideElement = (props: ISlideElementProps) => {
 						dispatch(selectSlideElement(-1));
 					}
 				},
-				onClick: () => handleSelectSlideElement(),
+				onClick: () => {
+					handleSelectSlideElement();
+				},
 				onKeyDown: (event) => handleKeyDown(event.key),
 				onKeyUp: (event) => handleCtrlKeyUp(event.key),
 			})}
@@ -305,7 +310,7 @@ const SlideElement = (props: ISlideElementProps) => {
 					}`}
 					draggable={false}
 					html={props.slideElement.content}
-					disabled={props.navigation}
+					disabled={resizing}
 					onKeyDown={(event) => event.stopPropagation()}
 					onMouseDown={(event) => event.stopPropagation()}
 					onChange={(event) =>

@@ -31,6 +31,8 @@ class Slide implements ISlide {
 			this._selectedElement,
 			slideElement
 		);
+		console.log(this._selectedElement)
+		console.log(this._elements[0])
 	}
 	set selectedElement(ISlideElement: Nullable<ISlideElement>) {
 		this._selectedElement = ISlideElement;
