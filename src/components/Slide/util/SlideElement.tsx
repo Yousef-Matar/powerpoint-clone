@@ -116,12 +116,13 @@ const SlideElement = (props: ISlideElementProps) => {
 					size: { ...elementSize },
 				})
 			);
-			if (htmlElement)
+			if (htmlElement) {
 				htmlElement.scrollIntoView({
 					behavior: "smooth",
 					block: "end",
 					inline: "nearest",
 				});
+			}
 		};
 	};
 	// Resize Slide Element
@@ -241,21 +242,22 @@ const SlideElement = (props: ISlideElementProps) => {
 		}
 	};
 	// Update Slide Element Content
-	const updateContent = useDebounce((value: string) => {
+	const updateContentDebounce = useDebounce((value: string) => {
 		dispatch(
 			updateSlideElement({
 				...props.slideElement,
 				content: value,
 			})
 		);
-	}, 300);
+	}, 1);
 	return (
 		<div
 			className={`bg-transparent rounded absolute flex items-center ${
 				props.navigation
 					? "preview-slide p-2"
 					: `show-resize cursor-move ${
-							props.slideElement.type !== slideElementType.image &&
+							props.slideElement.type !==
+								slideElementType.image &&
 							"p-5 border focus:border-solid focus-within:border-dashed"
 					  } ${
 							props.slideElement.content?.length === 0
@@ -273,7 +275,9 @@ const SlideElement = (props: ISlideElementProps) => {
 						? "100% 100%"
 						: undefined,
 				backgroundPosition:
-					props.slideElement.type === slideElementType.image ? "center" : undefined,
+					props.slideElement.type === slideElementType.image
+						? "center"
+						: undefined,
 				backgroundRepeat:
 					props.slideElement.type === slideElementType.image
 						? "no-repeat"
@@ -300,7 +304,7 @@ const SlideElement = (props: ISlideElementProps) => {
 			{!props.navigation && (
 				<ResizeIndicators resizeFunction={handleResize} />
 			)}
-			{(props.slideElement.type === slideElementType.text) && (
+			{props.slideElement.type === slideElementType.text && (
 				<ContentEditable
 					className={`focus:outline-none w-full ${
 						props.navigation ? "cursor-pointer" : "cursor-text"
@@ -311,7 +315,7 @@ const SlideElement = (props: ISlideElementProps) => {
 					onKeyDown={(event) => event.stopPropagation()}
 					onMouseDown={(event) => event.stopPropagation()}
 					onChange={(event) =>
-						updateContent(event.currentTarget.innerHTML)
+						updateContentDebounce(event.currentTarget.innerHTML)
 					}
 				/>
 			)}
